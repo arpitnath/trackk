@@ -36,6 +36,11 @@ $secondary-font: 'Open Sans', sans-serif;
 $font-weigth-1: 300;
 $font-weigth-2: 400;
 $font-weigth-3: 600;
+$font-size-0: 45px;
+$font-size-1: 24px;
+$font-size-2: 18px;
+$font-size-3: 14px;
+$font-size-4: 12px;
 
 $transition: all 0.3s linear;
 $spacing: 0.1rem;
@@ -44,3 +49,12 @@ $light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 $dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 $max-width: 1170px;
 $fixed-width: 620px;
+
+//distance
+$d0: 8px;
+$d1: 1rem;
+$d2: 1.5rem;
+$d3: 2rem;
+$d4: 24px;
+$d5: 50px;
+$d10: 100px;

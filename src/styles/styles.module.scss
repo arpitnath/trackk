@@ -1,5 +1,11 @@
 @use 'variables' as var;
 
+/*
+=============== 
+Navbar Styles
+===============
+*/
+
 nav {
   background: var.$white;
   height: 3rem;
@@ -17,4 +23,55 @@ nav {
   margin: 0 auto;
   align-items: center;
   text-align: center;
+}
+
+/*
+=============== 
+Jumbotron Styles
+===============
+*/
+
+.jumbo-container {
+  padding: var.$d3;
+  margin-bottom: var.$d10 / 2;
+  line-height: 0.75;
+}
+
+.jumbo-item {
+  display: flex;
+  padding: var.$d5 5%;
+  overflow: hidden;
+}
+.jumbo-wrapper {
+  width: 50%;
+
+  h1 {
+    font-size: var.$font-size-0;
+    line-height: 1.1;
+    margin-bottom: var.$d0;
+    @media (max-width: 600px) {
+      font-size: var.$font-size-1;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 0 45px;
+    text-align: center;
+  }
+}
+
+.jumbo-content {
+  p {
+    font-weight: normal;
+    line-height: 0.6;
+    font-size: var.$font-size-2;
+    @media (max-width: 600px) {
+      font-size: var.$font-size-4;
+      line-height: 1.2;
+    }
+  }
+  @media (max-width: 600px) {
+    margin-top: var.$d1;
+  }
 }
