@@ -1,0 +1,20 @@
+@use 'variables' as var;
+
+nav {
+  background: var.$white;
+  height: 3rem;
+  display: grid;
+  align-items: center;
+  box-shadow: var.$light-shadow;
+  font-style: italic;
+  color: var.$black;
+  margin-bottom: 0;
+  font-weight: var.$font-weigth-3;
+}
+.nav-container {
+  width: 90vw;
+  max-width: var.$fixed-width;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+}
