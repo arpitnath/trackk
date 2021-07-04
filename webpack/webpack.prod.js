@@ -1,9 +1,9 @@
-const BundleAnalyzerPlugin =
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin =
+//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: 'production',
-  devtool: 'source-map', //CRA recommends for prod env
+  devtool: 'source-map' //CRA recommends for prod env
 
-  plugins: [new BundleAnalyzerPlugin()]
+  // plugins: [new BundleAnalyzerPlugin()]
 }
