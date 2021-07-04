@@ -1,0 +1,28 @@
+{
+  "name": "trackk",
+  "version": "1.0.0",
+  "description": "task tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arpitnath/trackk.git"
+  },
+  "keywords": [
+    "ReactJS",
+    "Typescript",
+    "Scss",
+    "Javascript",
+    "Webpack",
+    "React",
+    "Hooks"
+  ],
+  "author": "Arpit Nath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arpitnath/trackk/issues"
+  },
+  "homepage": "https://github.com/arpitnath/trackk#readme"
+}
