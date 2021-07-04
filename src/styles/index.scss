@@ -77,3 +77,22 @@ p {
     line-height: 1;
   }
 }
+
+.break-wrapper {
+  width: 100%;
+  margin-top: -50px;
+  padding: 0 100px;
+
+  .break {
+    border-bottom: 2px solid var.$primary-10;
+    width: 100%;
+
+    @media (max-width: 1000px) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    padding: 0;
+  }
+}
