@@ -1,12 +1,13 @@
 import React from 'react'
-import { Jumbotron } from '../containers'
+import { Jumbotron, Groups } from '../containers'
 import { Break } from '../components'
 
-const Board = () => {
+const Board: React.FC = () => {
   return (
     <main>
       <Jumbotron />
       <Break />
+      <Groups />
     </main>
   )
 }
