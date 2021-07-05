@@ -20,3 +20,18 @@ export const moveToDifferentGroup = (
 
   return _list
 }
+
+export const moveInsideCurrentList = (
+  _list: Data,
+  groupRef: number,
+  fromIndex: number,
+  targetIndex: number
+) => {
+  const taskList = _list[groupRef].tasks
+  const draggedElement = taskList[fromIndex]
+
+  taskList.splice(fromIndex, 1)
+  taskList.splice(targetIndex, 0, draggedElement)
+
+  return _list
+}

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { moveToDifferentGroup } from '../utils/helpers'
+import { moveInsideCurrentList, moveToDifferentGroup } from '../utils/helpers'
 import { Data, Group } from '../utils/types'
 
 interface GroupComposition {
@@ -116,6 +116,22 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
           currentGroupRef,
           currentTaskRef,
           targetGroupRef
+        )
+
+        return newState
+      })
+    }
+
+    if (currentGroupRef === targetGroupRef) {
+      console.log(`%c MOVE_IN_SAME_ARRAY`, 'color: #2affd1')
+      setList((prevState) => {
+        const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+
+        const newState = moveInsideCurrentList(
+          copyOfPrevState,
+          currentGroupRef,
+          currentTaskRef,
+          targetIndexRef
         )
 
         return newState
