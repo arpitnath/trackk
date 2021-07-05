@@ -1,8 +1,6 @@
 import React from 'react'
 
 const Fallback: React.FC = () => {
-  console.log('%c ERROR', 'color: red')
-
   return (
     <div className='fallback-ui'>
       <span className={'errorBtn'}>

@@ -6,7 +6,7 @@ const JumbotronContainer: React.FC = () => {
     <Jumbotron.Container>
       <Jumbotron>
         <Jumbotron.Pane>
-          <Jumbotron.Title title={'Dev-Board'} />
+          <Jumbotron.Title title={'Trackk-Board'} />
           <Jumbotron.Content>
             <p>
               {' '}
@@ -27,7 +27,7 @@ const JumbotronContainer: React.FC = () => {
               <span role='img' aria-label='hammer'>
                 🔨{' '}
               </span>
-              Tasks are theactions that make up epics.
+              Tasks are the actions that make up epics.
             </p>
             <p>
               {' '}

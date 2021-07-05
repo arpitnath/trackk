@@ -35,7 +35,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
   const [list, setList] = useState(() => data)
   //   context value
 
-  //   console.log('data: ', list)
   const [dragging, setDragging] = useState(false)
   const dragItem: React.MutableRefObject<unknown> = useRef({
     grpI: null,
@@ -46,7 +45,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     itemI: null
   })
 
-  //   handelDragStart
   const handleDragStart = (
     e: React.DragEvent,
     params: { grpI: number; itemI: number }
@@ -71,11 +69,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     console.log(`%c ------drag enters------`, 'color: #ba3be0')
 
     const { classList, parentElement } = e.target as HTMLDivElement
-
-    console.log(
-      `%c CLASSLIST TARGET: ${classList} | ${typeof classList}`,
-      'color: #09eec8'
-    )
 
     if (!classList.value.includes('current')) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -102,9 +95,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     _params: { grpI: number; itemI: number }
   ) => {
     console.log('%c ------DROPPED--------', 'color: #f51ad8')
-    // console.log('event: ', e.target)
-    // console.log('params: ', _params)
-    //logic
+
     const currentItem = dragItem.current as { grpI: number; itemI: number }
     const currentGroupRef = currentItem.grpI
     const currentTaskRef = currentItem.itemI
@@ -117,7 +108,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     // console.log(`%c targetIndexRef: ${targetIndexRef}`, 'color: #bde607')
 
     if (currentGroupRef !== targetGroupRef) {
-      console.log(`%c MOVE`, 'color: #ff1d1d')
       setList((prevState) => {
         const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
 
@@ -133,7 +123,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     }
 
     if (currentGroupRef === targetGroupRef) {
-      console.log(`%c MOVE_IN_SAME_ARRAY`, 'color: #2affd1')
       setList((prevState) => {
         const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
 
@@ -159,7 +148,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
       setDragging(false)
     }
   }
-  //getStyles
+
   const getStyles = (_params: { grpI: number; itemI: number }) => {
     const currentItem = dragItem.current as { grpI: number; itemI: number }
 
@@ -324,20 +313,13 @@ const Block: React.FC<BlockProps> = ({
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    console.log('on drag over')
-    // const { classList, parentElement } = e.target as HTMLDivElement
-    // console.log(
-    //   `%c draging classLists: ${classList}, parent => ${parentElement}`,
-    //   'color: red'
-    // )
   }
 
   //modal
-  //   console.log(`%c grpI: ${grpI} | itemI: ${itemI}`, 'color: orange')
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log(`%c drag leave`, 'color: orange')
-    // console.log(`%c EVENT DRAG LEAVE == ${e.target}`, 'color:#52b6f8ca')
+    console.log(`%c ----- drag leave ------`, 'color: orange')
+
     const { parentElement } = e.target as HTMLDivElement
 
     if (parentElement) {
