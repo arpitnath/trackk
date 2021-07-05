@@ -6,7 +6,7 @@ export const useLocalStorgeState = (
   defaultValue: Data | (() => Data),
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
-  const [state, setState] = React.useState<Data>(() => {
+  const [state, setState] = React.useState(() => {
     const valueInLocalStorage = window.localStorage.getItem(key)
 
     if (valueInLocalStorage) {

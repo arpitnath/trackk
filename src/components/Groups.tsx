@@ -33,7 +33,7 @@ type GroupList = {
 }
 
 const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
-  const [list, setList] = useLocalStorgeState('board', data)
+  const [state, setState] = useLocalStorgeState('board', data)
   //   context value
 
   const [dragging, setDragging] = useState(false)
@@ -109,7 +109,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     // console.log(`%c targetIndexRef: ${targetIndexRef}`, 'color: #bde607')
 
     if (currentGroupRef !== targetGroupRef) {
-      setList((prevState) => {
+      setState((prevState: Data) => {
         const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
 
         const newState = moveToDifferentGroup(
@@ -124,7 +124,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     }
 
     if (currentGroupRef === targetGroupRef) {
-      setList((prevState) => {
+      setState((prevState: Data) => {
         const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
 
         const newState = moveInsideCurrentList(
@@ -164,10 +164,10 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
   }
 
   useEffect(() => {
-    list.forEach((group) => {
+    state.forEach((group: Group) => {
       group.tasks.forEach((arr) => {
         if (arr === undefined) {
-          setList((prevState) => {
+          setState((prevState: Data) => {
             const copyPrev = JSON.parse(JSON.stringify(prevState))
             const newState = copyPrev.tasks.splice(group.tasks.indexOf(arr), 1)
             return newState
@@ -175,11 +175,11 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
         }
       })
     })
-  }, [list])
+  }, [setState, state])
 
   return (
     <div className='group-wrapper'>
-      {list.map((group) => (
+      {state.map((group: Group) => (
         <Groups.List
           key={group.id}
           group={group}
