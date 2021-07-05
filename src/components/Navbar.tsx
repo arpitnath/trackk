@@ -1,27 +1,29 @@
 import React from 'react'
-import { Children } from '../utils/types'
 
-interface INavbar extends React.FC {
-  children?: Children
-  Container: React.FC<Children>
-  Title: React.FC<{ children: string }>
-  Logo: React.FC<Children>
+interface NavbarComposition {
+  Container: React.FC
+  Title: React.FC
+  Logo: React.FC
 }
 
-const Navbar: INavbar = ({ children }) => {
+const Navbar: React.FC & NavbarComposition = ({ children }) => {
   return <nav>{children}</nav>
 }
 
-Navbar.Container = function NavbarContainer({ children }) {
+const NavbarContainer: React.FC = ({ children }) => {
   return <div className='nav-container'>{children}</div>
 }
 
-Navbar.Title = function NavbarTitle({ children }) {
+const NavbarTitle: React.FC = ({ children }) => {
   return <>{children}</>
 }
 
-Navbar.Logo = function NavbarLogo({ children }) {
+const NavbarLogo: React.FC = ({ children }) => {
   return <>{children}</>
 }
+
+Navbar.Container = NavbarContainer
+Navbar.Title = NavbarTitle
+Navbar.Logo = NavbarLogo
 
 export default Navbar

@@ -1,6 +1,7 @@
+import React from 'react'
 import { Navbar } from '../components'
 
-const NavbarContainer = () => {
+const NavbarContainer: React.FC = () => {
   return (
     <Navbar>
       <Navbar.Container>

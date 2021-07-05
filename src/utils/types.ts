@@ -1,3 +1,5 @@
-export interface Children {
-  children: JSX.Element | React.ReactNode
+export interface Group {
+  title: string
+  tasks: string[]
 }
+export type Data = Group[]

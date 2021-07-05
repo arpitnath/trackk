@@ -1,7 +1,7 @@
 import React from 'react'
 import { Jumbotron } from '../components'
 
-const JumbotronContainer = () => {
+const JumbotronContainer: React.FC = () => {
   return (
     <Jumbotron.Container>
       <Jumbotron>

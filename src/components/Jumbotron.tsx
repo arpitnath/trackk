@@ -1,15 +1,13 @@
 import React from 'react'
-import { Children } from '../utils/types'
 
-interface IJumbotron extends React.FC {
-  children?: Children
-  Container: React.FC<Children>
-  Pane: React.FC<Children>
+interface JumbotronComposition {
+  Container: React.FC
+  Pane: React.FC
   Title: React.FC<{ title: string }>
-  Content: React.FC<Children>
+  Content: React.FC
 }
 
-const Jumbotron: IJumbotron = ({ children }) => {
+const Jumbotron: React.FC & JumbotronComposition = ({ children }) => {
   return (
     <div className='jumbo-item'>
       <div className='jumbo-wrapper'>{children}</div>
@@ -17,20 +15,25 @@ const Jumbotron: IJumbotron = ({ children }) => {
   )
 }
 
-Jumbotron.Container = function JumboCntainer({ children }) {
+const JumboContainer: React.FC = ({ children }) => {
   return <div className='jumbo-container'>{children}</div>
 }
 
-Jumbotron.Pane = function JumboPane({ children }) {
+const JumboPane: React.FC = ({ children }) => {
   return <div className='jumbo-pane'>{children}</div>
 }
 
-Jumbotron.Title = function JumboTitle({ title }) {
+const JumboTitle: React.FC<{ title: string }> = ({ title }) => {
   return <h1>{title}</h1>
 }
 
-Jumbotron.Content = function JumboContent({ children }) {
+const JumboContent: React.FC = ({ children }) => {
   return <div className='jumbo-content'>{children}</div>
 }
+
+Jumbotron.Container = JumboContainer
+Jumbotron.Pane = JumboPane
+Jumbotron.Title = JumboTitle
+Jumbotron.Content = JumboContent
 
 export default Jumbotron
