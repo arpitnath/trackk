@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useLocalStorgeState } from '../hooks/localStorageState'
 import { moveInsideCurrentList, moveToDifferentGroup } from '../utils/helpers'
 import { Data, Group } from '../utils/types'
 
@@ -32,7 +33,7 @@ type GroupList = {
 }
 
 const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
-  const [list, setList] = useState(() => data)
+  const [list, setList] = useLocalStorgeState('board', data)
   //   context value
 
   const [dragging, setDragging] = useState(false)
