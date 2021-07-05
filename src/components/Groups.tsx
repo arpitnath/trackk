@@ -83,14 +83,14 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
       }
     }
   }
-  //handleDragEnd
+
   const handleDragEnd = () => {
     console.log('%c ------DRAG ENDs--------', 'color: #e9f729')
     setDragging(false)
     dragItem.current = null
     dragNode.current = null
   }
-  //handleDragDrop
+
   const handleDragDrop = (
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
@@ -162,20 +162,6 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
 
     return 'list-item'
   }
-
-  // useEffect(() => {
-  //   state.forEach((group: Group) => {
-  //     group.tasks.forEach((arr) => {
-  //       if (arr === undefined) {
-  //         setState((prevState: Data) => {
-  //           const copyPrev = JSON.parse(JSON.stringify(prevState))
-  //           const newState = copyPrev.tasks.splice(group.tasks.indexOf(arr), 1)
-  //           return newState
-  //         })
-  //       }
-  //     })
-  //   })
-  // }, [setState, state])
 
   return (
     <div className='group-wrapper'>
