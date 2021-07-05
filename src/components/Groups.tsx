@@ -334,6 +334,7 @@ const Block: React.FC<BlockProps> = ({
 
   return (
     <div
+      placeholder='enter'
       className={dragging ? getStyles({ grpI, itemI }) : 'list-item'}
       draggable={true}
       onDragStart={(e) => handleDragStart(e, { grpI, itemI })}
@@ -343,7 +344,7 @@ const Block: React.FC<BlockProps> = ({
       onDragEnd={handleDragEnd}
       onDragLeave={(e) => handleDragLeave(e)}
       role={'none'}>
-      {item}
+      {item ? item : <span style={{ opacity: '0.3' }}>Untitled</span>}
     </div>
   )
 }
