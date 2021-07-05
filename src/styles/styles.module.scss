@@ -64,7 +64,7 @@ Jumbotron Styles
 .jumbo-content {
   p {
     font-weight: normal;
-    line-height: 0.6;
+    line-height: 1;
     font-size: var.$font-size-2;
     @media (max-width: 600px) {
       font-size: var.$font-size-4;
@@ -145,6 +145,12 @@ Groups Styles
   }
 }
 
+.group-heading {
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+}
+
 .current {
   box-shadow: var.$light-shadow;
 }
@@ -170,5 +176,27 @@ Groups Styles
 
   .errorBtn {
     @include basic-button;
+  }
+}
+
+/*
+=============== 
+Buttons Styles
+===============
+*/
+
+.button-wrapper {
+  // border: 2px solid red;
+  @include button-wrapper(false);
+  height: 34px;
+  width: 34px;
+  margin-top: -2px;
+}
+
+.button {
+  cursor: pointer;
+
+  &:hover {
+    color: var.$primary-4;
   }
 }

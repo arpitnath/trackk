@@ -4,3 +4,8 @@ export interface Group {
   tasks: string[]
 }
 export type Data = Group[]
+
+export type ButtonProps = {
+  icon: string
+  title: string
+}

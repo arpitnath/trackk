@@ -22,3 +22,40 @@
   border: none;
   cursor: pointer;
 }
+
+@mixin button-wrapper($wrapper: true) {
+  @if $wrapper {
+    height: 54px;
+    width: 154px;
+  }
+}
+
+@mixin button(
+  $height: 54px,
+  $width: 154px,
+  $background-color: transparent,
+  $default: true,
+  $border: true,
+  $padding: 16px 0
+) {
+  height: $height;
+  width: $width;
+  padding: $padding;
+  font-size: var.$font-size-4;
+  text-align: center;
+  cursor: pointer;
+
+  @if $default {
+    background-color: transparent;
+  }
+  else {
+    background-color: $background-color;
+  }
+
+  @if $border {
+    border: 1px solid var.$grey-9;
+  }
+  esle {
+    border: none;
+  }
+}

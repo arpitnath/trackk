@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useLocalStorgeState } from '../hooks/localStorageState'
 import { moveInsideCurrentList, moveToDifferentGroup } from '../utils/helpers'
 import { Data, Group } from '../utils/types'
+import { Button } from '../containers'
 
 interface GroupComposition {
   Container: React.FC
@@ -248,7 +249,10 @@ const GroupLists: React.FC<GroupList> = ({
 
   return (
     <div ref={_node} className='grp-list'>
-      <Groups.ListTitle title={title} />
+      <div className='group-heading'>
+        <Groups.ListTitle title={title} />
+        <Button icon={'carbon:add'} />
+      </div>
       {group.tasks.map((item, itemI) => (
         <Groups.Block
           key={item}
