@@ -120,3 +120,25 @@ Groups Styles
     margin-left: 8px;
   }
 }
+
+.list-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  min-height: 50px;
+  background-color: var.$primary-6;
+  border-radius: 5px;
+
+  &:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
+}
+
+// .list-item * {
+//   margin: 0;
+//   font-size: 2.2rem;
+// }
+
+.current {
+  background-color: #282c34;
+}
