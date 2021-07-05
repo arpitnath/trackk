@@ -163,23 +163,23 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     return 'list-item'
   }
 
-  useEffect(() => {
-    state.forEach((group: Group) => {
-      group.tasks.forEach((arr) => {
-        if (arr === undefined) {
-          setState((prevState: Data) => {
-            const copyPrev = JSON.parse(JSON.stringify(prevState))
-            const newState = copyPrev.tasks.splice(group.tasks.indexOf(arr), 1)
-            return newState
-          })
-        }
-      })
-    })
-  }, [setState, state])
+  // useEffect(() => {
+  //   state.forEach((group: Group) => {
+  //     group.tasks.forEach((arr) => {
+  //       if (arr === undefined) {
+  //         setState((prevState: Data) => {
+  //           const copyPrev = JSON.parse(JSON.stringify(prevState))
+  //           const newState = copyPrev.tasks.splice(group.tasks.indexOf(arr), 1)
+  //           return newState
+  //         })
+  //       }
+  //     })
+  //   })
+  // }, [setState, state])
 
   return (
     <div className='group-wrapper'>
-      {state.map((group: Group) => (
+      {state?.map((group: Group) => (
         <Groups.List
           key={group.id}
           group={group}
@@ -216,7 +216,6 @@ const GroupLists: React.FC<GroupList> = ({
     const currentRef = _node.current
 
     if (group.tasks.length === 0 && _node.current) {
-      console.log('%c currentRef fromUEF =', _node.current, 'color: orange')
       _node.current.addEventListener('dragenter', (e) => {
         const { classList } = e.target as HTMLDivElement
 

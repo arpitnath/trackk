@@ -88,6 +88,7 @@ Groups Styles
   display: flex;
   font-size: 24px;
   color: red;
+  padding: 0 5rem;
 }
 
 .group-wrapper {
@@ -143,11 +144,6 @@ Groups Styles
     margin-bottom: 0.5rem;
   }
 }
-
-// .list-item * {
-//   margin: 0;
-//   font-size: 2.2rem;
-// }
 
 .current {
   box-shadow: var.$light-shadow;
