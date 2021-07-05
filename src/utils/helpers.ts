@@ -35,3 +35,12 @@ export const moveInsideCurrentList = (
 
   return _list
 }
+
+export const addToList = (_list: Data, index: number, elementToAdd: any) => {
+  const newElement = elementToAdd
+
+  const targetList = _list[index].tasks
+  targetList.unshift(newElement)
+
+  return _list
+}

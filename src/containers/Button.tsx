@@ -1,13 +1,15 @@
 import React from 'react'
 import { Button } from '../components'
 
-const ButtonContainer: React.FC<{ icon?: string; title?: string }> = ({
-  icon = '',
-  title = ''
-}) => {
+const ButtonContainer: React.FC<{
+  icon?: string
+  title?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onclickFunction: (e: any) => void
+}> = ({ icon = '', title = '', onclickFunction }) => {
   return (
     <Button.Wrapper>
-      <Button icon={icon} title={title}>
+      <Button onclickFunction={onclickFunction} icon={icon} title={title}>
         <Button.Icon />
       </Button>
     </Button.Wrapper>

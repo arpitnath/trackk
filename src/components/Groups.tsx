@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalStorgeState } from '../hooks/localStorageState'
-import { moveInsideCurrentList, moveToDifferentGroup } from '../utils/helpers'
+import {
+  addToList,
+  moveInsideCurrentList,
+  moveToDifferentGroup
+} from '../utils/helpers'
 import { Data, Group } from '../utils/types'
 import { Button } from '../containers'
 
@@ -31,6 +35,7 @@ type GroupList = {
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
   ) => void
+  update: (e: any) => void
 }
 
 const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
@@ -164,6 +169,16 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     return 'list-item'
   }
 
+  const updateTaskList = (groupIndex: number) => {
+    const newElement = ''
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = addToList(copyOfPrevState, groupIndex, newElement)
+
+      return newState
+    })
+  }
+
   return (
     <div className='group-wrapper'>
       {state?.map((group: Group) => (
@@ -178,6 +193,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
           getStyles={getStyles}
           grpI={group.id}
           title={group.title}
+          update={updateTaskList}
         />
       ))}
     </div>
@@ -193,11 +209,10 @@ const GroupLists: React.FC<GroupList> = ({
   handleDragEnd,
   handleDragEnter,
   handleDragDrop,
-  title
+  title,
+  update
 }) => {
   const _node: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
-
-  //Button to add a new Block task
 
   useEffect(() => {
     const currentRef = _node.current
@@ -251,7 +266,7 @@ const GroupLists: React.FC<GroupList> = ({
     <div ref={_node} className='grp-list'>
       <div className='group-heading'>
         <Groups.ListTitle title={title} />
-        <Button icon={'carbon:add'} />
+        <Button onclickFunction={() => update(grpI)} icon={'carbon:add'} />
       </div>
       {group.tasks.map((item, itemI) => (
         <Groups.Block

@@ -186,7 +186,6 @@ Buttons Styles
 */
 
 .button-wrapper {
-  // border: 2px solid red;
   @include button-wrapper(false);
   height: 34px;
   width: 34px;

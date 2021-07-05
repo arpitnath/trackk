@@ -9,7 +9,6 @@ export const useLocalStorgeState = (
   const [state, setState] = React.useState(() => {
     let valueInLocalStorage = window.localStorage.getItem(key)
 
-    console.log('LOCAL STORAGE', valueInLocalStorage)
     if (valueInLocalStorage === 'undefined') {
       valueInLocalStorage = window.localStorage.getItem(`copy${key}`)
       window.localStorage.removeItem(key)
@@ -52,8 +51,6 @@ export const useLocalStorgeState = (
 
     prevKeyRef.current = key
     window.localStorage.setItem(key, serialize(state))
-
-    console.log(`%c checking: ${state} `, 'color: red')
   }, [key, serialize, state])
 
   return [state, setState]

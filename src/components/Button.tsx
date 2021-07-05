@@ -15,12 +15,20 @@ const ButtonContext = React.createContext({
 const Button: React.FC<ButtonProps> & ButtonComposition = ({
   children,
   icon,
-  title
+  title,
+  onclickFunction
 }) => {
   const btnProps = { icon, title }
   return (
     <ButtonContext.Provider value={btnProps}>
-      <div className='button'>{children}</div>
+      <div
+        aria-hidden
+        role={'presentation'}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onClick={(e: any) => onclickFunction(e)}
+        className='button'>
+        {children}
+      </div>
     </ButtonContext.Provider>
   )
 }
