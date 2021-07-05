@@ -152,3 +152,27 @@ Groups Styles
 .current {
   box-shadow: var.$light-shadow;
 }
+
+.fallback-ui {
+  @include layer;
+  color: var.$red-dark;
+  a {
+    text-decoration: none;
+    span {
+      color: var.$primary-6;
+    }
+  }
+
+  h3 {
+    font-weight: lighter;
+  }
+
+  .iconify {
+    width: 50px;
+    height: 50px;
+  }
+
+  .errorBtn {
+    @include basic-button;
+  }
+}
