@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { moveInsideCurrentList, moveToDifferentGroup } from '../utils/helpers'
 import { Data, Group } from '../utils/types'
 
@@ -19,7 +19,10 @@ type GroupList = {
   dragging: boolean
   grpI: number
   getStyles: (_params: { grpI: number; itemI: number }) => string
-  handleDragStart: (e: React.DragEvent<HTMLDivElement>, params: any) => void
+  handleDragStart: (
+    e: React.DragEvent<HTMLDivElement>,
+    params: { grpI: number; itemI: number }
+  ) => void
   handleDragEnd: () => void
   handleDragEnter: (e: React.DragEvent<HTMLDivElement>) => void
   handleDragDrop: (
@@ -57,7 +60,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
       setDragging(true)
     }, 0)
   }
-  //handleDragEnter
+
   const handleDragEnter = (
     e: React.DragEvent<{
       classList: typeof classList
@@ -92,19 +95,19 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     _params: { grpI: number; itemI: number }
   ) => {
     console.log('%c ------DROPPED--------', 'color: #f51ad8')
-    console.log('event: ', e.target)
-    console.log('params: ', _params)
+    // console.log('event: ', e.target)
+    // console.log('params: ', _params)
     //logic
     const currentItem = dragItem.current as { grpI: number; itemI: number }
     const currentGroupRef = currentItem.grpI
     const currentTaskRef = currentItem.itemI
     const targetGroupRef = _params.grpI
     const targetIndexRef = _params.itemI
-    console.log(`%c currentGroupRef: ${currentGroupRef}`, 'color: #07dee6')
-    console.log(`%c currentItemRef: ${currentTaskRef}`, 'color: #bde607')
-    console.log('%c ------------------', 'color: red')
-    console.log(`%c targetGroupRef: ${targetGroupRef}`, 'color: #07dee6')
-    console.log(`%c targetIndexRef: ${targetIndexRef}`, 'color: #bde607')
+    // console.log(`%c currentGroupRef: ${currentGroupRef}`, 'color: #07dee6')
+    // console.log(`%c currentItemRef: ${currentTaskRef}`, 'color: #bde607')
+    // console.log('%c ------------------', 'color: red')
+    // console.log(`%c targetGroupRef: ${targetGroupRef}`, 'color: #07dee6')
+    // console.log(`%c targetIndexRef: ${targetIndexRef}`, 'color: #bde607')
 
     if (currentGroupRef !== targetGroupRef) {
       console.log(`%c MOVE`, 'color: #ff1d1d')
@@ -137,6 +140,17 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
         return newState
       })
     }
+
+    const { classList, parentElement } = e.target as HTMLDivElement
+
+    if (!classList.value.includes('current')) {
+      if (parentElement) {
+        parentElement.style.background = 'none'
+      }
+    }
+    if (dragging) {
+      setDragging(false)
+    }
   }
   //getStyles
   const getStyles = (_params: { grpI: number; itemI: number }) => {
@@ -146,17 +160,25 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
       currentItem.grpI === _params.grpI &&
       currentItem.itemI === _params.itemI
     ) {
-      console.log('%c PIkkuuuuuuuu', 'color: #8bd1ff')
-
       return 'current list-item'
     }
 
     return 'list-item'
   }
 
-  //   React.useEffect(() => {
-  //     console.log(`%c dragItem: ${dragItem.current.grpI}`, 'color: red')
-  //   })
+  useEffect(() => {
+    list.forEach((group) => {
+      group.tasks.forEach((arr) => {
+        if (arr === undefined) {
+          setList((prevState) => {
+            const copyPrev = JSON.parse(JSON.stringify(prevState))
+            const newState = copyPrev.tasks.splice(group.tasks.indexOf(arr), 1)
+            return newState
+          })
+        }
+      })
+    })
+  }, [list])
 
   return (
     <div className='group-wrapper'>
@@ -189,11 +211,61 @@ const GroupLists: React.FC<GroupList> = ({
   handleDragDrop,
   title
 }) => {
-  console.log('group list: ', group)
-  console.log('group list id: ', grpI)
+  const _node: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
+
+  //Button to add a new Block task
+
+  useEffect(() => {
+    const currentRef = _node.current
+
+    if (group.tasks.length === 0 && _node.current) {
+      console.log('%c currentRef fromUEF =', _node.current, 'color: orange')
+      _node.current.addEventListener('dragenter', (e) => {
+        const { classList } = e.target as HTMLDivElement
+
+        if (classList.value.includes('grp-list')) {
+          _node.current?.addEventListener('dragover', (event) => {
+            event.preventDefault()
+            event.stopPropagation()
+
+            const { style } = event.target as HTMLDivElement
+
+            style.background = 'red'
+            style.height = '100px'
+
+            setTimeout(() => {
+              style.background = 'none'
+              style.height = ''
+            }, 200)
+          })
+        }
+      })
+
+      _node.current.addEventListener('drop', (e) =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        handleDragDrop(e, { grpI, itemI: 0 })
+      )
+    }
+
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener('drop', () => {
+          return
+        })
+        currentRef.removeEventListener('dragenter', () => {
+          return
+        })
+        currentRef.removeEventListener('drgaover', () => {
+          return
+        })
+      }
+    }
+    // eslint-disable-next-line
+  }, [group])
 
   return (
-    <div className='grp-list'>
+    <div ref={_node} className='grp-list'>
       <Groups.ListTitle title={title} />
       {group.tasks.map((item, itemI) => (
         <Groups.Block
@@ -217,7 +289,10 @@ type BlockProps = {
   item: string
   dragging: boolean
   getStyles: (_params: { grpI: number; itemI: number }) => string
-  handleDragStart: (e: React.DragEvent<HTMLDivElement>, params: any) => void
+  handleDragStart: (
+    e: React.DragEvent<HTMLDivElement>,
+    params: { grpI: number; itemI: number }
+  ) => void
   grpI: number
   itemI: number
   handleDragEnd: () => void
@@ -240,15 +315,22 @@ const Block: React.FC<BlockProps> = ({
   handleDragDrop
 }) => {
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
     e.stopPropagation()
+    e.preventDefault()
     console.log('on drag over')
+    // const { classList, parentElement } = e.target as HTMLDivElement
+    // console.log(
+    //   `%c draging classLists: ${classList}, parent => ${parentElement}`,
+    //   'color: red'
+    // )
   }
 
   //modal
-  console.log(`%c grpI: ${grpI} | itemI: ${itemI}`, 'color: orange')
+  //   console.log(`%c grpI: ${grpI} | itemI: ${itemI}`, 'color: orange')
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log(`%c drag leave`, 'color: orange')
+    // console.log(`%c EVENT DRAG LEAVE == ${e.target}`, 'color:#52b6f8ca')
     const { parentElement } = e.target as HTMLDivElement
 
     if (parentElement) {
