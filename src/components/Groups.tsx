@@ -24,7 +24,7 @@ type GroupList = {
     params: { grpI: number; itemI: number }
   ) => void
   handleDragEnd: () => void
-  handleDragEnter: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragEnter: (e: React.DragEvent<HTMLDivElement>, grpI: number) => void
   handleDragDrop: (
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
@@ -65,7 +65,8 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     e: React.DragEvent<{
       classList: typeof classList
       parentElement: typeof parentElement
-    }>
+    }>,
+    grpI: number
   ) => {
     console.log(`%c ------drag enters------`, 'color: #ba3be0')
 
@@ -77,8 +78,14 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     )
 
     if (!classList.value.includes('current')) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      if (dragItem.current.grpI === grpI) {
+        return
+      }
+
       if (parentElement) {
-        parentElement.style.background = 'red'
+        parentElement.style.background = 'hsl(212, 33%, 89%)'
       }
     }
   }
@@ -230,7 +237,7 @@ const GroupLists: React.FC<GroupList> = ({
 
             const { style } = event.target as HTMLDivElement
 
-            style.background = 'red'
+            style.background = 'hsl(212, 33%, 89%)'
             style.height = '100px'
 
             setTimeout(() => {
@@ -296,7 +303,7 @@ type BlockProps = {
   grpI: number
   itemI: number
   handleDragEnd: () => void
-  handleDragEnter: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragEnter: (e: React.DragEvent<HTMLDivElement>, grpI: number) => void
   handleDragDrop: (
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
@@ -343,7 +350,7 @@ const Block: React.FC<BlockProps> = ({
       className={dragging ? getStyles({ grpI, itemI }) : 'list-item'}
       draggable={true}
       onDragStart={(e) => handleDragStart(e, { grpI, itemI })}
-      onDragEnter={(e) => handleDragEnter(e)}
+      onDragEnter={(e) => handleDragEnter(e, grpI)}
       onDragOver={(e) => handleDragOver(e)}
       onDrop={(e) => handleDragDrop(e, { grpI: grpI, itemI: itemI })}
       onDragEnd={handleDragEnd}

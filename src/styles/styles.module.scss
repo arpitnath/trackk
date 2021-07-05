@@ -83,11 +83,11 @@ Groups Styles
 */
 
 .group-container {
-  background-color: #282c34;
+  background-color: transparent;
   min-height: 100vh;
   display: flex;
   font-size: 24px;
-  color: white;
+  color: red;
 }
 
 .group-wrapper {
@@ -104,8 +104,8 @@ Groups Styles
 }
 
 .grp-list {
-  background-color: #495052;
-  color: white;
+  background-color: transparent;
+  color: black;
   border-radius: 5px;
   padding: 0.5rem;
 }
@@ -114,7 +114,11 @@ Groups Styles
   text-align: left;
   margin-bottom: 0.5rem;
   font-size: 14px;
-  color: whitesmoke;
+  background-color: var.$green-light;
+  border-radius: 5px;
+  padding-left: var.$d0;
+  padding-bottom: 4px;
+  max-width: fit-content;
 
   span {
     margin-left: 8px;
@@ -125,9 +129,15 @@ Groups Styles
   display: flex;
   justify-content: left;
   align-items: center;
-  min-height: 50px;
-  background-color: var.$primary-6;
+  padding-left: 8px;
+  height: 40px;
+  width: 260px;
+  background-color: transparent;
   border-radius: 5px;
+  border: 1px solid var.$grey-9;
+  box-shadow: var.$light-shadow;
+  font-size: 14px;
+  font-weight: bold;
 
   &:not(:last-of-type) {
     margin-bottom: 0.5rem;
@@ -140,5 +150,5 @@ Groups Styles
 // }
 
 .current {
-  background-color: #282c34;
+  box-shadow: var.$light-shadow;
 }
