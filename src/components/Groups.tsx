@@ -239,8 +239,6 @@ const Block: React.FC<BlockProps> = ({
   handleDragEnter,
   handleDragDrop
 }) => {
-  //   console.log('dragging bool: ', dragging, item)
-
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
@@ -249,6 +247,14 @@ const Block: React.FC<BlockProps> = ({
 
   //modal
   console.log(`%c grpI: ${grpI} | itemI: ${itemI}`, 'color: orange')
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    const { parentElement } = e.target as HTMLDivElement
+
+    if (parentElement) {
+      parentElement.style.background = 'none'
+    }
+  }
 
   return (
     <div
@@ -259,6 +265,7 @@ const Block: React.FC<BlockProps> = ({
       onDragOver={(e) => handleDragOver(e)}
       onDrop={(e) => handleDragDrop(e, { grpI: grpI, itemI: itemI })}
       onDragEnd={handleDragEnd}
+      onDragLeave={(e) => handleDragLeave(e)}
       role={'none'}>
       {item}
     </div>
