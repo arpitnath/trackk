@@ -7,7 +7,7 @@ import {
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../utils/helpers'
-import { ChangeTarget, Data, Group } from '../utils/types'
+import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button } from '../containers'
 
 interface GroupComposition {
@@ -279,7 +279,7 @@ const GroupLists: React.FC<GroupList> = ({
       {group.tasks.map((item, itemI) => (
         <Groups.Block
           key={item.id}
-          item={item?.heading}
+          item={item}
           dragging={dragging}
           getStyles={getStyles}
           handleDragStart={handleDragStart}
@@ -295,7 +295,7 @@ const GroupLists: React.FC<GroupList> = ({
 }
 
 type BlockProps = {
-  item: string
+  item: Task
   dragging: boolean
   getStyles: (_params: { grpI: number; itemI: number }) => string
   handleDragStart: (
@@ -340,29 +340,29 @@ const Block: React.FC<BlockProps> = ({
     }
   }
 
-  const [newTask, setNewTask] = useState(item)
+  const [newTask, setNewTask] = useState(item.heading)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeTask = (event: any) => {
     setNewTask(event.target.value)
   }
 
-  type Loc = {
-    g: number
-    i: number
+  type Location = {
+    groupIndex: number
+    itemIndex: number
   }
 
   const [taskState, setTaskState] = useState(false)
-  const [elementLocation, setElementLocation] = useState<Loc>({
-    g: 0,
-    i: 0
+  const [elementLocation, setElementLocation] = useState<Location>({
+    groupIndex: 0,
+    itemIndex: 0
   })
 
   const handleClick = (groupIndex: number, itemIndex: number) => {
     setTaskState(true)
     setElementLocation({
-      g: groupIndex,
-      i: itemIndex
+      groupIndex: groupIndex,
+      itemIndex: itemIndex
     })
   }
 
@@ -371,13 +371,13 @@ const Block: React.FC<BlockProps> = ({
   const handleUpdateTask = () => {
     setTaskState(false)
 
-    const { g, i } = elementLocation
+    const { groupIndex, itemIndex } = elementLocation
     setState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = editList(
         copyOfPrevState,
-        g,
-        i,
+        groupIndex,
+        itemIndex,
         newTask,
         ChangeTarget.HEADING
       )
@@ -408,8 +408,8 @@ const Block: React.FC<BlockProps> = ({
           onDragEnd={handleDragEnd}
           onDragLeave={(e) => handleDragLeave(e)}
           role={'none'}>
-          {item !== 'untitled' ? (
-            <span>{item}</span>
+          {item.heading !== 'untitled' ? (
+            <span>{item.heading}</span>
           ) : (
             <span style={{ opacity: '0.3' }}>{newTask}</span>
           )}
