@@ -1,4 +1,5 @@
 import { Data } from './types'
+import { v4 as uuid } from 'uuid'
 
 export const moveToDifferentGroup = (
   _list: Data,
@@ -36,8 +37,12 @@ export const moveInsideCurrentList = (
   return _list
 }
 
-export const addToList = (_list: Data, index: number, elementToAdd: string) => {
-  const newElement = elementToAdd
+export const addToList = (_list: Data, index: number) => {
+  const newElement = {
+    id: uuid(),
+    heading: 'untitled',
+    content: ''
+  }
 
   const targetList = _list[index].tasks
   targetList.unshift(newElement)
@@ -49,11 +54,14 @@ export const editList = (
   array: Data,
   groupIndex: number,
   elementIndex: number,
-  editedElement: string
+  editedHeading: string
 ) => {
   const targetList = array[groupIndex].tasks
+  const targetTask = targetList[elementIndex]
 
-  targetList.splice(elementIndex, 1, editedElement)
+  targetTask.heading = editedHeading
+
+  targetList.splice(elementIndex, 1, targetTask)
 
   return array
 }

@@ -174,10 +174,10 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     return 'list-item'
   }
 
-  const updateTaskList = (groupIndex: number, newElement = 'Untitled') => {
+  const updateTaskList = (groupIndex: number) => {
     setState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
-      const newState = addToList(copyOfPrevState, groupIndex, newElement)
+      const newState = addToList(copyOfPrevState, groupIndex)
 
       return newState
     })
@@ -188,7 +188,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
   return (
     <GroupContext.Provider value={taskContext}>
       <div className='group-wrapper'>
-        {state?.map((group: Group) => (
+        {state?.map((group: Group, grpI: number) => (
           <Groups.List
             key={group.id}
             group={group}
@@ -198,7 +198,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
             handleDragDrop={handleDragDrop}
             dragging={dragging}
             getStyles={getStyles}
-            grpI={group.id}
+            grpI={grpI}
             title={group.title}
             update={updateTaskList}
           />
@@ -278,8 +278,8 @@ const GroupLists: React.FC<GroupList> = ({
       </div>
       {group.tasks.map((item, itemI) => (
         <Groups.Block
-          key={item}
-          item={item}
+          key={item.id}
+          item={item?.heading}
           dragging={dragging}
           getStyles={getStyles}
           handleDragStart={handleDragStart}
@@ -402,7 +402,7 @@ const Block: React.FC<BlockProps> = ({
           onDragEnd={handleDragEnd}
           onDragLeave={(e) => handleDragLeave(e)}
           role={'none'}>
-          {item !== 'Untitled' ? (
+          {item !== 'untitled' ? (
             <span>{item}</span>
           ) : (
             <span style={{ opacity: '0.3' }}>{newTask}</span>

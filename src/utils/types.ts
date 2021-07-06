@@ -1,7 +1,7 @@
 export interface Group {
-  id: number
+  id: string
   title: string
-  tasks: string[]
+  tasks: Task[]
 }
 export type Data = Group[]
 
@@ -11,4 +11,10 @@ export type ButtonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onclickFunction: (e: any) => void
   _className: string
+}
+
+export type Task = {
+  id: string
+  heading: string
+  content: string
 }
