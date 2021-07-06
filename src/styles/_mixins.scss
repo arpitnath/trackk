@@ -1,4 +1,26 @@
 @use './variables' as var;
+
+@mixin nav($main: true) {
+  @if $main {
+    background: var.$white;
+    height: 3rem;
+    display: grid;
+    align-items: center;
+    box-shadow: var.$light-shadow;
+    font-style: italic;
+    color: var.$black;
+    margin-bottom: 0;
+    font-weight: var.$font-weigth-3;
+  } @else {
+    height: 3rem;
+    display: grid;
+    align-items: center;
+    color: var.$black;
+    margin-bottom: 0;
+    font-weight: var.$font-weigth-3;
+  }
+}
+
 @mixin layer {
   width: 100vmax;
   height: 100vh;
@@ -63,4 +85,10 @@
 @mixin dimensions($height, $width) {
   height: $height;
   width: $width;
+}
+
+@mixin section {
+  height: 50%;
+  text-align: left;
+  justify-content: center;
 }

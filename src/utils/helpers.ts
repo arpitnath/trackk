@@ -1,4 +1,4 @@
-import { Data } from './types'
+import { ChangeTarget, Data } from './types'
 import { v4 as uuid } from 'uuid'
 
 export const moveToDifferentGroup = (
@@ -41,7 +41,7 @@ export const addToList = (_list: Data, index: number) => {
   const newElement = {
     id: uuid(),
     heading: 'untitled',
-    content: ''
+    content: 'Please enter a text'
   }
 
   const targetList = _list[index].tasks
@@ -54,12 +54,19 @@ export const editList = (
   array: Data,
   groupIndex: number,
   elementIndex: number,
-  editedHeading: string
+  edited: string,
+  change: ChangeTarget
 ) => {
   const targetList = array[groupIndex].tasks
   const targetTask = targetList[elementIndex]
 
-  targetTask.heading = editedHeading
+  if (change === ChangeTarget.BODY) {
+    targetTask.content = edited
+  } else if (change === ChangeTarget.HEADING) {
+    targetTask.heading = edited
+  } else {
+    return array
+  }
 
   targetList.splice(elementIndex, 1, targetTask)
 

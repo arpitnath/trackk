@@ -7,7 +7,7 @@ import {
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../utils/helpers'
-import { Data, Group } from '../utils/types'
+import { ChangeTarget, Data, Group } from '../utils/types'
 import { Button } from '../containers'
 
 interface GroupComposition {
@@ -374,7 +374,13 @@ const Block: React.FC<BlockProps> = ({
     const { g, i } = elementLocation
     setState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
-      const newState = editList(copyOfPrevState, g, i, newTask)
+      const newState = editList(
+        copyOfPrevState,
+        g,
+        i,
+        newTask,
+        ChangeTarget.HEADING
+      )
 
       return newState
     })

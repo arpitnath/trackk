@@ -18,3 +18,8 @@ export type Task = {
   heading: string
   content: string
 }
+
+export enum ChangeTarget {
+  HEADING = 'heading',
+  BODY = 'content'
+}

@@ -7,15 +7,7 @@ Navbar Styles
 */
 
 nav {
-  background: var.$white;
-  height: 3rem;
-  display: grid;
-  align-items: center;
-  box-shadow: var.$light-shadow;
-  font-style: italic;
-  color: var.$black;
-  margin-bottom: 0;
-  font-weight: var.$font-weigth-3;
+  @include nav(true);
 }
 .nav-container {
   width: 90vw;
@@ -33,7 +25,7 @@ Jumbotron Styles
 
 .jumbo-container {
   padding: var.$d3;
-  margin-bottom: var.$d10 / 2;
+  margin-bottom: (var.$d10 / 2);
   line-height: 0.75;
 }
 
@@ -250,4 +242,110 @@ Buttons Styles
 
 .check-btn {
   margin-top: 5px;
+}
+
+/*
+=============== 
+Modal Styles
+===============
+*/
+
+.modal-container {
+  width: 100vmax;
+  height: 100vmax;
+  overflow-y: hidden;
+  background: rgba(66, 66, 66, 0.8);
+  position: fixed;
+  display: flex;
+  left: 50%;
+  transform: translate(-50%);
+  justify-content: center;
+  align-items: center;
+  top: -40px;
+  z-index: 10000000;
+  padding: 20px 0;
+
+  @media screen and (min-width: 1800px) {
+    top: -10%;
+  }
+}
+
+.modal-wrapper {
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  position: fixed;
+  z-index: 10000000;
+  margin-top: -65vh;
+  width: 944px;
+  height: 940px;
+
+  .modal-navbar {
+    @include nav($main: false);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 12px;
+  }
+
+  @media screen and (min-width: 1800px) {
+    @include dimensions(1200px, 944px);
+  }
+}
+
+.modal-icon {
+  margin-right: auto;
+  margin-left: auto;
+  z-index: 100000000000;
+  margin-left: 0;
+  margin-top: 3px;
+}
+
+.modal-nav-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 24px);
+  gap: 0px;
+  padding: 0 12px;
+  color: var.$grey-7;
+}
+
+.modal-textarea {
+  height: 90%;
+  width: 100%;
+  padding: 1rem 7rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  @include section;
+
+  h1 {
+    font-size: var.$font-size-0;
+    padding: 0;
+    margin-left: -10px;
+  }
+}
+
+.modal-body {
+  @include section;
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    color: green;
+    border: none;
+    outline: none;
+    cursor: text;
+  }
+}
+
+.body-content {
+  height: 100%;
+  width: inherit;
+}
+
+.placeholder {
+  textarea {
+    color: red;
+  }
 }
