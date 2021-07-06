@@ -146,6 +146,11 @@ Groups Styles
 
   &:hover {
     cursor: pointer;
+    background-color: var.$grey-10;
+  }
+
+  span {
+    width: 540px;
   }
 }
 

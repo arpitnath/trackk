@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useLocalStorgeState } from '../hooks/localStorageState'
 import {
   addToList,
+  deletetask,
   editList,
   moveInsideCurrentList,
   moveToDifferentGroup
@@ -375,7 +376,14 @@ const Block: React.FC<BlockProps> = ({
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = editList(copyOfPrevState, g, i, newTask)
 
-      console.log('newState: ', newState)
+      return newState
+    })
+  }
+
+  const handleDeleteTask = (groupIndex: number, taskIndex: number) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = deletetask(copyOfPrevState, groupIndex, taskIndex)
 
       return newState
     })
@@ -395,7 +403,7 @@ const Block: React.FC<BlockProps> = ({
           onDragLeave={(e) => handleDragLeave(e)}
           role={'none'}>
           {item !== 'Untitled' ? (
-            item
+            <span>{item}</span>
           ) : (
             <span style={{ opacity: '0.3' }}>{newTask}</span>
           )}
@@ -406,7 +414,7 @@ const Block: React.FC<BlockProps> = ({
               icon={'mdi:fountain-pen-tip'}
             />
             <Button
-              onclickFunction={() => console.log('ok')}
+              onclickFunction={() => handleDeleteTask(grpI, itemI)}
               icon={'fluent:delete-off-20-filled'}
             />
           </div>

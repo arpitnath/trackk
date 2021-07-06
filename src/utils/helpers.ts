@@ -57,3 +57,15 @@ export const editList = (
 
   return array
 }
+
+export const deletetask = (
+  array: Data,
+  groupIndex: number,
+  taskIndex: number
+) => {
+  const targetList = array[groupIndex].tasks
+
+  targetList.splice(taskIndex, 1)
+
+  return array
+}
