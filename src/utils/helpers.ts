@@ -36,11 +36,24 @@ export const moveInsideCurrentList = (
   return _list
 }
 
-export const addToList = (_list: Data, index: number, elementToAdd: any) => {
+export const addToList = (_list: Data, index: number, elementToAdd: string) => {
   const newElement = elementToAdd
 
   const targetList = _list[index].tasks
   targetList.unshift(newElement)
 
   return _list
+}
+
+export const editList = (
+  array: Data,
+  groupIndex: number,
+  elementIndex: number,
+  editedElement: string
+) => {
+  const targetList = array[groupIndex].tasks
+
+  targetList.splice(elementIndex, 1, editedElement)
+
+  return array
 }

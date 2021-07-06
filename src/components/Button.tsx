@@ -9,16 +9,18 @@ interface ButtonComposition {
 
 const ButtonContext = React.createContext({
   icon: '',
-  title: ''
+  title: '',
+  _className: ''
 })
 
 const Button: React.FC<ButtonProps> & ButtonComposition = ({
   children,
   icon,
   title,
-  onclickFunction
+  onclickFunction,
+  _className
 }) => {
-  const btnProps = { icon, title }
+  const btnProps = { icon, title, _className }
   return (
     <ButtonContext.Provider value={btnProps}>
       <div
@@ -34,7 +36,7 @@ const Button: React.FC<ButtonProps> & ButtonComposition = ({
 }
 
 const Wrapper: React.FC = ({ children }) => {
-  return <div className='button-wrapper'>{children}</div>
+  return <div className={`button-wrapper`}>{children}</div>
 }
 
 const Title: React.FC = () => {
@@ -44,9 +46,14 @@ const Title: React.FC = () => {
 
 const Icon: React.FC = () => {
   //icons from https://iconify.design/icon-sets/
-  const { icon } = React.useContext(ButtonContext)
+  const { icon, _className } = React.useContext(ButtonContext)
 
-  return <span className='iconify' data-icon={icon} data-inline='false'></span>
+  return (
+    <span
+      className={`iconify ${_className}`}
+      data-icon={icon}
+      data-inline='false'></span>
+  )
 }
 
 Button.Wrapper = Wrapper

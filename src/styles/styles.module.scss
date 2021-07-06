@@ -143,6 +143,10 @@ Groups Styles
   &:not(:last-of-type) {
     margin-bottom: 0.5rem;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .group-heading {
@@ -179,6 +183,10 @@ Groups Styles
   }
 }
 
+.new-tsk-item {
+  border: 2px solid red;
+}
+
 /*
 =============== 
 Buttons Styles
@@ -194,8 +202,47 @@ Buttons Styles
 
 .button {
   cursor: pointer;
-
+  @include button($height: 34px, $width: 34px, $default: true, $padding: 0);
+  border: none;
   &:hover {
     color: var.$primary-4;
   }
+
+  .iconify {
+    @include dimensions(24px, 24px);
+  }
+}
+
+.task-add-btn {
+  @include button($height: 34px, $width: 34px, $default: true, $padding: 0);
+  border: none;
+
+  .iconify {
+    @include dimensions(24px, 24px);
+    margin-left: 8rem;
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  @include dimensions(40px, 260px);
+  padding-top: 12px;
+}
+
+.list-item {
+  input {
+    @include dimensions(36px, 200px);
+    display: flex;
+    justify-content: flex-start;
+    border: none;
+    font-size: 15px;
+    color: orange;
+    font-weight: 600;
+  }
+}
+
+.check-btn {
+  margin-top: 5px;
 }

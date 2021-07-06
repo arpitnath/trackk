@@ -10,4 +10,5 @@ export type ButtonProps = {
   title: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onclickFunction: (e: any) => void
+  _className: string
 }

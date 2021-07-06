@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useLocalStorgeState } from '../hooks/localStorageState'
 import {
   addToList,
+  editList,
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../utils/helpers'
@@ -35,12 +36,15 @@ type GroupList = {
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
   ) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   update: (e: any) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const GroupContext: React.Context<any> = React.createContext(null)
+
 const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
   const [state, setState] = useLocalStorgeState('board', data)
-  //   context value
 
   const [dragging, setDragging] = useState(false)
   const dragItem: React.MutableRefObject<unknown> = useRef({
@@ -169,8 +173,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     return 'list-item'
   }
 
-  const updateTaskList = (groupIndex: number) => {
-    const newElement = ''
+  const updateTaskList = (groupIndex: number, newElement = 'Untitled') => {
     setState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = addToList(copyOfPrevState, groupIndex, newElement)
@@ -179,24 +182,28 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     })
   }
 
+  const taskContext = { setState }
+
   return (
-    <div className='group-wrapper'>
-      {state?.map((group: Group) => (
-        <Groups.List
-          key={group.id}
-          group={group}
-          handleDragStart={handleDragStart}
-          handleDragEnter={handleDragEnter}
-          handleDragEnd={handleDragEnd}
-          handleDragDrop={handleDragDrop}
-          dragging={dragging}
-          getStyles={getStyles}
-          grpI={group.id}
-          title={group.title}
-          update={updateTaskList}
-        />
-      ))}
-    </div>
+    <GroupContext.Provider value={taskContext}>
+      <div className='group-wrapper'>
+        {state?.map((group: Group) => (
+          <Groups.List
+            key={group.id}
+            group={group}
+            handleDragStart={handleDragStart}
+            handleDragEnter={handleDragEnter}
+            handleDragEnd={handleDragEnd}
+            handleDragDrop={handleDragDrop}
+            dragging={dragging}
+            getStyles={getStyles}
+            grpI={group.id}
+            title={group.title}
+            update={updateTaskList}
+          />
+        ))}
+      </div>
+    </GroupContext.Provider>
   )
 }
 
@@ -332,20 +339,89 @@ const Block: React.FC<BlockProps> = ({
     }
   }
 
+  const [newTask, setNewTask] = useState(item)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChangeTask = (event: any) => {
+    setNewTask(event.target.value)
+  }
+
+  type Loc = {
+    g: number
+    i: number
+  }
+
+  const [taskState, setTaskState] = useState(false)
+  const [elementLocation, setElementLocation] = useState<Loc>({
+    g: 0,
+    i: 0
+  })
+
+  const handleClick = (groupIndex: number, itemIndex: number) => {
+    setTaskState(true)
+    setElementLocation({
+      g: groupIndex,
+      i: itemIndex
+    })
+  }
+
+  const { setState } = useContext(GroupContext)
+
+  const handleUpdateTask = () => {
+    setTaskState(false)
+
+    const { g, i } = elementLocation
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = editList(copyOfPrevState, g, i, newTask)
+
+      console.log('newState: ', newState)
+
+      return newState
+    })
+  }
+
   return (
-    <div
-      placeholder='enter'
-      className={dragging ? getStyles({ grpI, itemI }) : 'list-item'}
-      draggable={true}
-      onDragStart={(e) => handleDragStart(e, { grpI, itemI })}
-      onDragEnter={(e) => handleDragEnter(e, grpI)}
-      onDragOver={(e) => handleDragOver(e)}
-      onDrop={(e) => handleDragDrop(e, { grpI: grpI, itemI: itemI })}
-      onDragEnd={handleDragEnd}
-      onDragLeave={(e) => handleDragLeave(e)}
-      role={'none'}>
-      {item ? item : <span style={{ opacity: '0.3' }}>Untitled</span>}
-    </div>
+    <>
+      {!taskState ? (
+        <div
+          className={dragging ? getStyles({ grpI, itemI }) : 'list-item'}
+          draggable={true}
+          onDragStart={(e) => handleDragStart(e, { grpI, itemI })}
+          onDragEnter={(e) => handleDragEnter(e, grpI)}
+          onDragOver={(e) => handleDragOver(e)}
+          onDrop={(e) => handleDragDrop(e, { grpI: grpI, itemI: itemI })}
+          onDragEnd={handleDragEnd}
+          onDragLeave={(e) => handleDragLeave(e)}
+          role={'none'}>
+          {item !== 'Untitled' ? (
+            item
+          ) : (
+            <span style={{ opacity: '0.3' }}>{newTask}</span>
+          )}
+
+          <div className='btn-container'>
+            <Button
+              onclickFunction={() => handleClick(grpI, itemI)}
+              icon={'mdi:fountain-pen-tip'}
+            />
+            <Button
+              onclickFunction={() => console.log('ok')}
+              icon={'fluent:delete-off-20-filled'}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className='list-item'>
+          <input value={newTask} onChange={handleChangeTask} />
+          <Button
+            ClassName='check-btn'
+            onclickFunction={handleUpdateTask}
+            icon={'ant-design:check-outlined'}
+          />
+        </div>
+      )}
+    </>
   )
 }
 
