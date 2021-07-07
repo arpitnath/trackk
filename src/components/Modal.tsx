@@ -84,6 +84,7 @@ const ModalHeaderBody: React.FC<{
   }
 
   const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
     updateState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = editList(
