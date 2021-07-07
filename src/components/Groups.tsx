@@ -8,7 +8,8 @@ import {
   moveToDifferentGroup
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
-import { Button } from '../containers'
+import { Button, Modal as ModalContainer } from '../containers'
+import { Modal } from './'
 
 interface GroupComposition {
   Container: React.FC
@@ -42,7 +43,7 @@ type GroupList = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const GroupContext: React.Context<any> = React.createContext(null)
+export const GroupContext: React.Context<any> = React.createContext(null)
 
 const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
   const [state, setState] = useLocalStorgeState('board', data)
@@ -294,6 +295,11 @@ const GroupLists: React.FC<GroupList> = ({
   )
 }
 
+export type Location = {
+  groupIndex: number
+  itemIndex: number
+}
+
 type BlockProps = {
   item: Task
   dragging: boolean
@@ -323,41 +329,28 @@ const Block: React.FC<BlockProps> = ({
   handleDragEnter,
   handleDragDrop
 }) => {
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.stopPropagation()
-    e.preventDefault()
-  }
-
-  //modal
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log(`%c ----- drag leave ------`, 'color: orange')
-
-    const { parentElement } = e.target as HTMLDivElement
-
-    if (parentElement) {
-      parentElement.style.background = 'none'
-    }
-  }
+  const { setState } = useContext(GroupContext)
 
   const [newTask, setNewTask] = useState(item.heading)
 
+  const [taskState, setTaskState] = useState<boolean>(false)
+
+  const [elementLocation, setElementLocation] = useState<Location>({
+    groupIndex: grpI,
+    itemIndex: itemI
+  })
+  const [showModal, setShowModal] = useState<boolean>(false)
+
+  const openModal = () => {
+    setShowModal((prev) => !prev)
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeTask = (event: any) => {
+    console.log(event.target.value)
+
     setNewTask(event.target.value)
   }
-
-  type Location = {
-    groupIndex: number
-    itemIndex: number
-  }
-
-  const [taskState, setTaskState] = useState(false)
-  const [elementLocation, setElementLocation] = useState<Location>({
-    groupIndex: 0,
-    itemIndex: 0
-  })
-
   const handleClick = (groupIndex: number, itemIndex: number) => {
     setTaskState(true)
     setElementLocation({
@@ -365,21 +358,24 @@ const Block: React.FC<BlockProps> = ({
       itemIndex: itemIndex
     })
   }
-
-  const { setState } = useContext(GroupContext)
-
-  const handleUpdateTask = () => {
+  const handleUpdateTask = (modalFlag: boolean) => {
     setTaskState(false)
 
+    console.log(`%c --MODAL FLAG-- => ${modalFlag}`, 'color: #fffb00')
     const { groupIndex, itemIndex } = elementLocation
+
+    console.log(`%c --TASK-STATE-- => ${taskState}`, 'color: red')
+    console.log(`%c --groupIndex-- => ${groupIndex}`, 'color: #ff9292')
+    console.log(`%c --itemIndex-- => ${itemIndex}`, 'color: #92ddff')
     setState((prevState: Data) => {
+      const _target = !modalFlag ? ChangeTarget.HEADING : ChangeTarget.BODY
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = editList(
         copyOfPrevState,
         groupIndex,
         itemIndex,
         newTask,
-        ChangeTarget.HEADING
+        _target
       )
 
       return newState
@@ -394,6 +390,34 @@ const Block: React.FC<BlockProps> = ({
       return newState
     })
   }
+
+  // Event handlers
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log(`%c ----- drag leave ------`, 'color: orange')
+
+    const { parentElement } = e.target as HTMLDivElement
+
+    if (parentElement) {
+      parentElement.style.background = 'none'
+    }
+  }
+
+  React.useEffect(() => {
+    const doc = document.body
+    if (doc) {
+      doc.style.overflowY = showModal ? 'hidden' : 'scroll'
+    }
+
+    return () => {
+      doc.style.overflowY = 'scroll'
+    }
+  }, [showModal])
 
   return (
     <>
@@ -414,6 +438,11 @@ const Block: React.FC<BlockProps> = ({
             <span style={{ opacity: '0.3' }}>{newTask}</span>
           )}
 
+          {showModal && (
+            <Modal callback={setShowModal} handleTask={handleUpdateTask}>
+              <ModalContainer elementLocation={elementLocation} data={item} />
+            </Modal>
+          )}
           <div className='btn-container'>
             <Button
               onclickFunction={() => handleClick(grpI, itemI)}
@@ -423,14 +452,17 @@ const Block: React.FC<BlockProps> = ({
               onclickFunction={() => handleDeleteTask(grpI, itemI)}
               icon={'fluent:delete-off-20-filled'}
             />
+            <Button onclickFunction={openModal} icon={'cil:options'} />
           </div>
         </div>
       ) : (
+        //
         <div className='list-item'>
           <input value={newTask} onChange={handleChangeTask} />
+
           <Button
             ClassName='check-btn'
-            onclickFunction={handleUpdateTask}
+            onclickFunction={() => handleUpdateTask(false)}
             icon={'ant-design:check-outlined'}
           />
         </div>

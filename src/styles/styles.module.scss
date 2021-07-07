@@ -206,7 +206,7 @@ Buttons Styles
   }
 
   .iconify {
-    @include dimensions(24px, 24px);
+    @include dimensions(21px, 21px);
   }
 }
 
@@ -237,6 +237,14 @@ Buttons Styles
     font-size: 15px;
     color: orange;
     font-weight: 600;
+
+    outline: none;
+
+    &:active {
+      color: red;
+      font-style: italic;
+      width: 100%;
+    }
   }
 }
 
@@ -250,7 +258,7 @@ Modal Styles
 ===============
 */
 
-.modal-container {
+.modal-wrapper {
   width: 100vmax;
   height: 100vmax;
   overflow-y: hidden;
@@ -270,82 +278,156 @@ Modal Styles
   }
 }
 
-.modal-wrapper {
+.modal-data-container {
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
-  position: fixed;
+  position: relative;
   z-index: 10000000;
-  margin-top: -65vh;
-  width: 944px;
-  height: 940px;
+  margin-top: -60vh;
+  border-radius: 2px;
 
-  .modal-navbar {
-    @include nav($main: false);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-left: 12px;
+  @media screen and (min-width: 1800px) {
+    margin-top: -70vh;
   }
+}
+
+.modal-container {
+  width: 844px;
+  height: 884px;
+  display: flex;
+  flex-direction: column;
+  padding: var.$d1 + var.$d3;
 
   @media screen and (min-width: 1800px) {
     @include dimensions(1200px, 944px);
   }
 }
 
-.modal-icon {
-  margin-right: auto;
-  margin-left: auto;
-  z-index: 100000000000;
-  margin-left: 0;
-  margin-top: 3px;
-}
-
-.modal-nav-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 24px);
-  gap: 0px;
-  padding: 0 12px;
-  color: var.$grey-7;
-}
-
-.modal-textarea {
-  height: 90%;
-  width: 100%;
-  padding: 1rem 7rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
+.modal-section-wrapper {
+  // border: 2px solid red;
   @include section;
+}
 
-  h1 {
-    font-size: var.$font-size-0;
-    padding: 0;
-    margin-left: -10px;
+.header-section {
+  input {
+    width: 100%;
+    height: fit-content;
+    font-size: 44px;
+    color: rgba(66, 66, 66, 0.8);
   }
 }
 
-.modal-body {
-  @include section;
+.header-container {
+  height: 100%;
+
+  .header-body {
+    padding: 0px;
+    height: 100%;
+  }
+
+  .header-title {
+    height: 70px;
+
+    // h2 {
+    //   input {
+    //     font-size: var.$font-size-2;
+    //     font-style: oblique;
+    //   }
+    // }
+  }
+}
+
+.modal-options {
+  border: 2px solid green;
+  width: 100%;
+  height: 450px;
+}
+
+// .content-section {
+// }
+
+.modal-textarea {
+  height: 100%;
+  position: relative;
 
   textarea {
     width: 100%;
     height: 100%;
-    color: green;
-    border: none;
+    text-decoration: none;
     outline: none;
+    border: none;
     cursor: text;
+    font-size: var.$font-size-5;
   }
 }
 
-.body-content {
-  height: 100%;
-  width: inherit;
-}
+//   .modal-navbar {
+//     @include nav($main: false);
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     margin-left: 12px;
+//   }
 
-.placeholder {
-  textarea {
-    color: red;
-  }
-}
+//   @media screen and (min-width: 1800px) {
+//     @include dimensions(1200px, 944px);
+//   }
+// }
+
+// .modal-icon {
+//   margin-right: auto;
+//   margin-left: auto;
+//   z-index: 100000000000;
+//   margin-left: 0;
+//   margin-top: 3px;
+// }
+
+// .modal-nav-container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, 24px);
+//   gap: 0px;
+//   padding: 0 12px;
+//   color: var.$grey-7;
+// }
+
+// .modal-textarea {
+//   height: 90%;
+//   width: 100%;
+//   padding: 1rem 7rem;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .modal-header {
+//   @include section;
+
+//   h1 {
+//     font-size: var.$font-size-0;
+//     padding: 0;
+//     margin-left: -10px;
+//   }
+// }
+
+// .modal-body {
+//   @include section;
+
+//   textarea {
+//     width: 100%;
+//     height: 100%;
+//     color: green;
+//     border: none;
+//     outline: none;
+//     cursor: text;
+//   }
+// }
+
+// .body-content {
+//   height: 100%;
+//   width: inherit;
+// }
+
+// .placeholder {
+//   textarea {
+//     color: red;
+//   }
+// }
