@@ -1,0 +1,61 @@
+/* dark shades of primary color*/
+$primary-1: hsl(205, 86%, 17%);
+$primary-2: hsl(205, 77%, 27%);
+$primary-3: hsl(205, 72%, 37%);
+$primary-4: hsl(205, 63%, 48%);
+/* primary/main color */
+$primary-5: hsl(205, 78%, 60%);
+/* lighter shades of primary color */
+$primary-6: hsl(205, 89%, 70%);
+$primary-7: hsl(205, 90%, 76%);
+$primary-8: hsl(205, 86%, 81%);
+$primary-9: hsl(205, 90%, 88%);
+$primary-10: hsl(205, 100%, 90%);
+/* darkest grey - used for headings */
+$grey-1: hsl(209, 61%, 16%);
+$grey-2: hsl(211, 39%, 23%);
+$grey-3: hsl(209, 34%, 30%);
+$grey-4: hsl(209, 28%, 39%);
+/* grey used for paragraphs */
+$grey-5: hsl(210, 22%, 49%);
+$grey-6: hsl(209, 23%, 60%);
+$grey-7: hsl(211, 27%, 70%);
+$grey-8: hsl(210, 31%, 80%);
+$grey-9: hsl(212, 33%, 89%);
+$grey-10: hsl(210, 36%, 96%);
+$white: #fff;
+$red-dark: hsl(360, 67%, 44%);
+$red-light: hsl(360, 71%, 66%);
+$green-dark: hsl(125, 67%, 44%);
+$green-light: hsl(125, 71%, 66%);
+$black: #222;
+
+/* Font */
+$primary-font: 'Roboto', sans-serif;
+$secondary-font: 'Open Sans', sans-serif;
+$font-weigth-1: 300;
+$font-weigth-2: 400;
+$font-weigth-3: 600;
+$font-size-0: 45px;
+$font-size-1: 24px;
+$font-size-2: 18px;
+$font-size-3: 14px;
+$font-size-4: 12px;
+$font-size-5: 16px;
+
+$transition: all 0.3s linear;
+$spacing: 0.1rem;
+$radius: 0.25rem;
+$light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+$dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+$max-width: 1170px;
+$fixed-width: 620px;
+
+//distance
+$d0: 8px;
+$d1: 1rem;
+$d2: 1.5rem;
+$d3: 2rem;
+$d4: 24px;
+$d5: 50px;
+$d10: 100px;

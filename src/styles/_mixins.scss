@@ -1,0 +1,94 @@
+@use './variables' as var;
+
+@mixin nav($main: true) {
+  @if $main {
+    background: var.$white;
+    height: 3rem;
+    display: grid;
+    align-items: center;
+    box-shadow: var.$light-shadow;
+    font-style: italic;
+    color: var.$black;
+    margin-bottom: 0;
+    font-weight: var.$font-weigth-3;
+  } @else {
+    height: 3rem;
+    display: grid;
+    align-items: center;
+    color: var.$black;
+    margin-bottom: 0;
+    font-weight: var.$font-weigth-3;
+  }
+}
+
+@mixin layer {
+  width: 100vmax;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  left: 50%;
+  transform: translate(-50%);
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  z-index: 10000000;
+}
+
+@mixin basic-button {
+  height: 54px;
+  width: 154px;
+  padding: 16px 0;
+  font-size: var.$font-size-4;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+@mixin button-wrapper($wrapper: true) {
+  @if $wrapper {
+    height: 54px;
+    width: 154px;
+  }
+}
+
+@mixin button(
+  $height: 54px,
+  $width: 154px,
+  $background-color: transparent,
+  $default: true,
+  $border: true,
+  $padding: 16px 0
+) {
+  height: $height;
+  width: $width;
+  padding: $padding;
+  font-size: var.$font-size-4;
+  text-align: center;
+  cursor: pointer;
+
+  @if $default {
+    background-color: transparent;
+  }
+  else {
+    background-color: $background-color;
+  }
+
+  @if $border {
+    border: 1px solid var.$grey-9;
+  }
+  esle {
+    border: none;
+  }
+}
+
+@mixin dimensions($height, $width) {
+  height: $height;
+  width: $width;
+}
+
+@mixin section {
+  height: 50%;
+  text-align: left;
+  justify-content: center;
+}

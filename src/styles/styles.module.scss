@@ -1,0 +1,433 @@
+@use 'variables' as var;
+
+/*
+=============== 
+Navbar Styles
+===============
+*/
+
+nav {
+  @include nav(true);
+}
+.nav-container {
+  width: 90vw;
+  max-width: var.$fixed-width;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+}
+
+/*
+=============== 
+Jumbotron Styles
+===============
+*/
+
+.jumbo-container {
+  padding: var.$d3;
+  margin-bottom: (var.$d10 / 2);
+  line-height: 0.75;
+}
+
+.jumbo-item {
+  display: flex;
+  padding: var.$d5 5%;
+  overflow: hidden;
+}
+.jumbo-wrapper {
+  width: 50%;
+
+  h1 {
+    font-size: var.$font-size-0;
+    line-height: 1.1;
+    margin-bottom: var.$d0;
+    @media (max-width: 600px) {
+      font-size: var.$font-size-1;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 0 45px;
+    text-align: center;
+  }
+}
+
+.jumbo-content {
+  p {
+    font-weight: normal;
+    line-height: 1;
+    font-size: var.$font-size-2;
+    @media (max-width: 600px) {
+      font-size: var.$font-size-4;
+      line-height: 1.2;
+    }
+  }
+  @media (max-width: 600px) {
+    margin-top: var.$d1;
+  }
+}
+
+/*
+=============== 
+Groups Styles
+===============
+*/
+
+.group-container {
+  background-color: transparent;
+  min-height: 100vh;
+  display: flex;
+  font-size: 24px;
+  color: red;
+  padding: 0 5rem;
+}
+
+.group-wrapper {
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, 350px);
+  align-items: start;
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+}
+
+.grp-list {
+  background-color: transparent;
+  color: black;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.grp-title {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  background-color: var.$green-light;
+  border-radius: 5px;
+  padding-left: var.$d0;
+  padding-bottom: 4px;
+  max-width: fit-content;
+
+  span {
+    margin-left: 8px;
+  }
+}
+
+.list-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 8px;
+  height: 40px;
+  width: 260px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid var.$grey-9;
+  box-shadow: var.$light-shadow;
+  font-size: 14px;
+  font-weight: bold;
+
+  &:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var.$grey-10;
+  }
+
+  span {
+    width: 540px;
+  }
+}
+
+.group-heading {
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+}
+
+.current {
+  box-shadow: var.$light-shadow;
+}
+
+.fallback-ui {
+  @include layer;
+  color: var.$red-dark;
+  a {
+    text-decoration: none;
+    span {
+      color: var.$primary-6;
+    }
+  }
+
+  h3 {
+    font-weight: lighter;
+  }
+
+  .iconify {
+    width: 50px;
+    height: 50px;
+  }
+
+  .errorBtn {
+    @include basic-button;
+  }
+}
+
+.new-tsk-item {
+  border: 2px solid red;
+}
+
+/*
+=============== 
+Buttons Styles
+===============
+*/
+
+.button-wrapper {
+  @include button-wrapper(false);
+  height: 34px;
+  width: 34px;
+  margin-top: -2px;
+}
+
+.button {
+  cursor: pointer;
+  @include button($height: 34px, $width: 34px, $default: true, $padding: 0);
+  border: none;
+  &:hover {
+    color: var.$primary-4;
+  }
+
+  .iconify {
+    @include dimensions(21px, 21px);
+  }
+}
+
+.task-add-btn {
+  @include button($height: 34px, $width: 34px, $default: true, $padding: 0);
+  border: none;
+
+  .iconify {
+    @include dimensions(24px, 24px);
+    margin-left: 8rem;
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  @include dimensions(40px, 260px);
+  padding-top: 12px;
+}
+
+.list-item {
+  input {
+    @include dimensions(36px, 200px);
+    display: flex;
+    justify-content: flex-start;
+    border: none;
+    font-size: 15px;
+    color: orange;
+    font-weight: 600;
+
+    outline: none;
+
+    &:active {
+      color: red;
+      font-style: italic;
+      width: 100%;
+    }
+  }
+}
+
+.check-btn {
+  margin-top: 5px;
+}
+
+/*
+=============== 
+Modal Styles
+===============
+*/
+
+.modal-wrapper {
+  width: 100vmax;
+  height: 100vmax;
+  overflow-y: hidden;
+  background: rgba(66, 66, 66, 0.8);
+  position: fixed;
+  display: flex;
+  left: 50%;
+  transform: translate(-50%);
+  justify-content: center;
+  align-items: center;
+  top: -40px;
+  z-index: 10000000;
+  padding: 20px 0;
+
+  @media screen and (min-width: 1800px) {
+    top: -10%;
+  }
+}
+
+.modal-data-container {
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  position: relative;
+  z-index: 10000000;
+  margin-top: -60vh;
+  border-radius: 2px;
+
+  @media screen and (min-width: 1800px) {
+    margin-top: -70vh;
+  }
+}
+
+.modal-container {
+  width: 844px;
+  height: 884px;
+  display: flex;
+  flex-direction: column;
+  padding: var.$d1 + var.$d3;
+
+  @media screen and (min-width: 1800px) {
+    @include dimensions(1200px, 944px);
+  }
+}
+
+.modal-section-wrapper {
+  // border: 2px solid red;
+  @include section;
+}
+
+.header-section {
+  input {
+    width: 100%;
+    height: fit-content;
+    font-size: 44px;
+    color: rgba(66, 66, 66, 0.8);
+  }
+}
+
+.header-container {
+  height: 100%;
+
+  .header-body {
+    padding: 0px;
+    height: 100%;
+  }
+
+  .header-title {
+    height: 70px;
+
+    // h2 {
+    //   input {
+    //     font-size: var.$font-size-2;
+    //     font-style: oblique;
+    //   }
+    // }
+  }
+}
+
+.modal-options {
+  border: 2px solid green;
+  width: 100%;
+  height: 450px;
+}
+
+// .content-section {
+// }
+
+.modal-textarea {
+  height: 100%;
+  position: relative;
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: text;
+    font-size: var.$font-size-5;
+  }
+}
+
+//   .modal-navbar {
+//     @include nav($main: false);
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     margin-left: 12px;
+//   }
+
+//   @media screen and (min-width: 1800px) {
+//     @include dimensions(1200px, 944px);
+//   }
+// }
+
+// .modal-icon {
+//   margin-right: auto;
+//   margin-left: auto;
+//   z-index: 100000000000;
+//   margin-left: 0;
+//   margin-top: 3px;
+// }
+
+// .modal-nav-container {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, 24px);
+//   gap: 0px;
+//   padding: 0 12px;
+//   color: var.$grey-7;
+// }
+
+// .modal-textarea {
+//   height: 90%;
+//   width: 100%;
+//   padding: 1rem 7rem;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .modal-header {
+//   @include section;
+
+//   h1 {
+//     font-size: var.$font-size-0;
+//     padding: 0;
+//     margin-left: -10px;
+//   }
+// }
+
+// .modal-body {
+//   @include section;
+
+//   textarea {
+//     width: 100%;
+//     height: 100%;
+//     color: green;
+//     border: none;
+//     outline: none;
+//     cursor: text;
+//   }
+// }
+
+// .body-content {
+//   height: 100%;
+//   width: inherit;
+// }
+
+// .placeholder {
+//   textarea {
+//     color: red;
+//   }
+// }
