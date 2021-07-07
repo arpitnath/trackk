@@ -409,6 +409,10 @@ const Block: React.FC<BlockProps> = ({
   }
 
   React.useEffect(() => {
+    setNewTask(() => item.heading)
+  }, [item])
+
+  React.useEffect(() => {
     const doc = document.body
     if (doc) {
       doc.style.overflowY = showModal ? 'hidden' : 'scroll'
