@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { editList } from '../utils/helpers'
 import { ChangeTarget, Data } from '../utils/types'
 import { Location } from './Groups'
@@ -83,36 +83,60 @@ const ModalHeaderBody: React.FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeTask = (event: any) => {
     setHeadTitle(event.target.value)
-
+    debouncedUpdaterCall(event.target.value)
     /**
      * @Note
      * updateState function is being called on every keystroke
      * Need to handle it efficiently
      */
+  }
 
+  const updaterCall = (value: string) => {
     updateState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
-      console.log(`%c --ItemIndex: ${event.target.value} `, 'color: #b30303')
+      console.log(`%c --ItemIndex: ${value} `, 'color: #b30303')
       const newState = editList(
         copyOfPrevState,
         location.groupIndex,
         location.itemIndex,
-        event.target.value,
+        value,
         ChangeTarget.HEADING
       )
       return newState
     })
   }
 
-  useEffect(() => {
-    console.log(`%c --GroupIndex: ${location.groupIndex} `, 'color: #8effd4')
-    console.log(`%c --ItemIndex: ${location.itemIndex} `, 'color: #b30303')
-  }, [location.groupIndex, location.itemIndex])
+  const debounce = (
+    fn: (...args: any[]) => void,
+    delay: number
+  ): ((...args: any[]) => void) => {
+    //main func
+    let timer: any = undefined
+
+    return (...args) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+      }, delay)
+    }
+  }
+
+  // const processChange = debounce(foo, 1700)
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
+
+  // const processChange = (e) => console.log(e.target.value)
 
   return (
     <div className='header-container'>
       <div aria-hidden={true} className='header-body'>
-        <input onChange={handleChangeTask} value={headTitle} />
+        <input
+          onChange={(e) => handleChangeTask(e)}
+          // onKeyUp={(e) => processChange(e)}
+          value={headTitle}
+        />
         {children}
       </div>
     </div>
