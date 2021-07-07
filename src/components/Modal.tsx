@@ -83,7 +83,13 @@ const ModalHeaderBody: React.FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeTask = (event: any) => {
     setHeadTitle(event.target.value)
-    // handleUpateAppState()
+
+    /**
+     * @Note
+     * updateState function is being called on every keystroke
+     * Need to handle it efficiently
+     */
+
     updateState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       console.log(`%c --ItemIndex: ${event.target.value} `, 'color: #b30303')
