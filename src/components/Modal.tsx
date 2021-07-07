@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { editList } from '../utils/helpers'
+import { debounce, editList } from '../utils/helpers'
 import { ChangeTarget, Data } from '../utils/types'
 import { Location } from './Groups'
 
@@ -41,9 +41,6 @@ const Modal: React.FC<Props> & ModalComposition = ({
     }
   }
 
-  // React.useEffect(() => {
-  //   console.log(`%c modaRef => ${modalNodeRef.current}`, 'color: red')
-  // })
   return (
     <div
       aria-hidden={true}
@@ -84,17 +81,11 @@ const ModalHeaderBody: React.FC<{
   const handleChangeTask = (event: any) => {
     setHeadTitle(event.target.value)
     debouncedUpdaterCall(event.target.value)
-    /**
-     * @Note
-     * updateState function is being called on every keystroke
-     * Need to handle it efficiently
-     */
   }
 
   const updaterCall = (value: string) => {
     updateState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
-      console.log(`%c --ItemIndex: ${value} `, 'color: #b30303')
       const newState = editList(
         copyOfPrevState,
         location.groupIndex,
@@ -105,29 +96,19 @@ const ModalHeaderBody: React.FC<{
       return newState
     })
   }
-
-  const debounce = (
-    fn: (...args: any[]) => void,
-    delay: number
-  ): ((...args: any[]) => void) => {
-    //main func
-    let timer: any = undefined
-
-    return (...args) => {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        fn.apply(this, args)
-      }, delay)
-    }
-  }
-
-  // const processChange = debounce(foo, 1700)
+  /**
+   * @Important
+   * Without using `useCallback Hook debounce function do not work as how we want to`
+   * Because whenever we are calling updaterCall we are creating a fresh
+   * debounce function that is being invoked on every keystroke and since we are
+   * calling the fresh debounce function every time, we are loosing the reference
+   * to the older debounce function and that is why it will loose its value.
+   */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdaterCall = React.useCallback(
     debounce((nextVal) => updaterCall(nextVal), 700),
     []
   )
-
-  // const processChange = (e) => console.log(e.target.value)
 
   return (
     <div className='header-container'>

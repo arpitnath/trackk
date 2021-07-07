@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeTarget, Data } from './types'
 import { v4 as uuid } from 'uuid'
 
@@ -83,4 +84,18 @@ export const deletetask = (
   targetList.splice(taskIndex, 1)
 
   return array
+}
+
+export const debounce = (
+  fn: (...args: any[]) => void,
+  delay: number
+): ((...args: any[]) => void) => {
+  let timer: any = undefined
+
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
 }

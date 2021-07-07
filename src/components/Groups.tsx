@@ -347,8 +347,6 @@ const Block: React.FC<BlockProps> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeTask = (event: any) => {
-    console.log(event.target.value)
-
     setNewTask(event.target.value)
   }
   const handleClick = (groupIndex: number, itemIndex: number) => {
