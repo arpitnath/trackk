@@ -62,8 +62,11 @@ export const editList = (
   const targetTask = targetList[elementIndex]
 
   if (change === ChangeTarget.BODY) {
+    console.log('function call -- body --')
+
     targetTask.content = edited
   } else if (change === ChangeTarget.HEADING) {
+    console.log('function call -- head --')
     targetTask.heading = edited
   } else {
     return array

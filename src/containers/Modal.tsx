@@ -16,14 +16,18 @@ const ModalContainer: React.FC<Props> = ({ data, elementLocation }) => {
         <Modal.Options />
         <Modal.HeaderBody
           location={elementLocation}
-          updateState={setState}
+          updateTitle={setState}
           title={data.heading}>
           <Modal.HeaderOptions />
         </Modal.HeaderBody>
       </Modal.Header>
       <Modal.Content>
         <Modal.Placeholder />
-        <Modal.TextArea content={data.content} />
+        <Modal.TextArea
+          location={elementLocation}
+          updateContent={setState}
+          content={data.content}
+        />
       </Modal.Content>
     </Modal.Container>
   )

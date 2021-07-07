@@ -441,7 +441,7 @@ const Block: React.FC<BlockProps> = ({
           )}
 
           {showModal && (
-            <Modal callback={setShowModal} handleTask={handleUpdateTask}>
+            <Modal callback={setShowModal}>
               <ModalContainer elementLocation={elementLocation} data={item} />
             </Modal>
           )}

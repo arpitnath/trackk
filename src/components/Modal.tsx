@@ -10,26 +10,26 @@ interface ModalComposition {
   HeaderBody: React.FC<{
     title: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    updateState: any
+    updateTitle: any
     location: Location
   }>
   HeaderOptions: React.FC
   Content: React.FC
   Placeholder: React.FC
-  TextArea: React.FC<{ content: string }>
+  TextArea: React.FC<{
+    location: Location
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updateContent: any
+    content: string
+  }>
 }
 
 type Props = {
   callback: React.Dispatch<React.SetStateAction<boolean>>
-  handleTask: (arg: boolean) => void
 }
 
 //main entry point
-const Modal: React.FC<Props> & ModalComposition = ({
-  children,
-  callback,
-  handleTask
-}) => {
+const Modal: React.FC<Props> & ModalComposition = ({ children, callback }) => {
   const modalNodeRef = useRef<HTMLDivElement | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -37,7 +37,6 @@ const Modal: React.FC<Props> & ModalComposition = ({
       console.log('modal clicked outside')
 
       callback(false)
-      handleTask(true)
     }
   }
 
@@ -72,9 +71,9 @@ const ModalOptions: React.FC = () => {
 const ModalHeaderBody: React.FC<{
   title: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  updateState: any
+  updateTitle: any
   location: Location
-}> = ({ children, title, updateState, location }) => {
+}> = ({ children, title, updateTitle, location }) => {
   const [headTitle, setHeadTitle] = useState(() => title)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,7 +84,7 @@ const ModalHeaderBody: React.FC<{
 
   const updaterCall = (value: string) => {
     console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
-    updateState((prevState: Data) => {
+    updateTitle((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = editList(
         copyOfPrevState,
@@ -143,12 +142,43 @@ const ModalPlaceholder: React.FC = () => {
   return <div className='modal-body-placeholder'></div>
 }
 
-const ModalTextArea: React.FC<{ content: string }> = ({ content }) => {
-  console.log(content)
+const ModalTextArea: React.FC<{
+  content: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  updateContent: any
+  location: Location
+}> = ({ content, updateContent, location }) => {
+  const [text, setText] = useState(() => content)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChangeTaskContent = (event: any) => {
+    setText(event.target.value)
+    debouncedUpdaterCall(event.target.value)
+  }
+
+  const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
+    updateContent((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = editList(
+        copyOfPrevState,
+        location.groupIndex,
+        location.itemIndex,
+        value,
+        ChangeTarget.BODY
+      )
+      return newState
+    })
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
   return (
     <div className='modal-textarea'>
-      {/* <textarea value={content} />{' '} */}
+      <textarea onChange={handleChangeTaskContent} value={text} />{' '}
     </div>
   )
 }
