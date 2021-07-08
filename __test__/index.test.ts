@@ -1,20 +1,5 @@
-// const expect = require('chai').expect
-import { expect } from 'chai'
-
-describe('Dummy Test', () => {
-  it('should succeed', (done) => {
+describe('Dummy Test Run', () => {
+  it('All OK!', (done) => {
     setTimeout(done, 1000)
-  })
-
-  it('dummy test should pass', () => {
-    const dummy = true
-
-    expect(dummy).to.be.true
-  })
-
-  it('dummy test should fail', () => {
-    const dummy = false
-
-    expect(dummy).to.be.false
   })
 })
