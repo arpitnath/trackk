@@ -1,6 +1,7 @@
 import { data } from '../../src/utils/defData'
 import {
   addToList,
+  deletetask,
   editList,
   moveInsideCurrentList,
   moveToDifferentGroup
@@ -239,6 +240,41 @@ describe('Edit A TASK ', () => {
       editedTaskItem = newState[groupRef].tasks[taskRef]
 
       expect(editedTaskItem.content).to.be.eq(edit)
+    })
+  })
+})
+
+describe('DELETE A TASK ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should remove the task ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+
+    let groupRef: undefined | number = undefined
+    let taskRef: undefined | number = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupRef = 1
+      taskRef = 0
+    })
+
+    it('should delete the task', () => {
+      newState = deletetask(copyOfPrevState, groupRef, taskRef)
+      const deletedTask = prevState[groupRef].tasks[taskRef]
+      const prevStateListLength = prevState[groupRef].tasks.length
+      const newStateListLength = newState[groupRef].tasks.length
+
+      const checkItemRemoved = newState[groupRef].tasks.indexOf(deletedTask)
+
+      expect(newStateListLength).to.be.eql(prevStateListLength - 1)
+      expect(checkItemRemoved).to.be.eql(-1)
     })
   })
 })
