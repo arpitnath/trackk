@@ -1,11 +1,12 @@
 import { data } from '../../src/utils/defData'
 import {
   addToList,
+  editList,
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../../src/utils/helpers'
 import { expect } from 'chai'
-import { Data, Group, Task } from '../../src/utils/types'
+import { ChangeTarget, Data, Group, Task } from '../../src/utils/types'
 
 describe('MOVE TASK TO A DIFFERENT GROUP', () => {
   let listOfTask: undefined | Data = undefined
@@ -202,6 +203,42 @@ describe('Add TASK IN THE TARGET GROUP LIST', () => {
       const newStateTargetGroupList = newState[groupRef].tasks
 
       expect(newTaskItem.id).to.be.eql(newStateTargetGroupList[0].id)
+    })
+  })
+})
+
+describe('Edit A TASK ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a new task in a target group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+
+    let groupRef: undefined | number = undefined
+    let taskRef: undefined | number = undefined
+
+    let editedTaskItem: undefined | Task = undefined
+
+    let edit: undefined | string = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupRef = 1
+      taskRef = 0
+    })
+
+    it('should edit body of the task', () => {
+      edit = 'new task body'
+      const change = ChangeTarget.BODY
+      newState = editList(copyOfPrevState, groupRef, taskRef, edit, change)
+      editedTaskItem = newState[groupRef].tasks[taskRef]
+
+      expect(editedTaskItem.content).to.be.eq(edit)
     })
   })
 })
