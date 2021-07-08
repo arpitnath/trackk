@@ -1,23 +1,11 @@
 import { data } from '../../src/utils/defData'
 import {
+  addToList,
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../../src/utils/helpers'
 import { expect } from 'chai'
 import { Data, Group, Task } from '../../src/utils/types'
-
-// const dummyTasks: Task[] = [
-//   {
-//     id: 'demo_dummy#1',
-//     heading: 'dummy task',
-//     content: 'dummy content'
-//   }
-// ]
-// const dummyGroup: Group = {
-//   id: 'group_id#dummy',
-//   title: 'group 3',
-//   tasks: dummyTasks
-// }
 
 describe('MOVE TASK TO A DIFFERENT GROUP', () => {
   let listOfTask: undefined | Data = undefined
@@ -119,7 +107,6 @@ describe('MOVE TASK TO A DIFFERENT GROUP', () => {
   })
 })
 
-//next
 describe('MOVE TASK IN THE SAME GROUP', () => {
   let listOfTask: undefined | Data = undefined
   before(() => {
@@ -170,6 +157,51 @@ describe('MOVE TASK IN THE SAME GROUP', () => {
       const taskAtTargetIndexId = newStateTargetGroupList[targetIndex].id
 
       expect(taskAtTargetIndexId).to.be.eq(currentTaskId)
+    })
+  })
+})
+
+describe('Add TASK IN THE TARGET GROUP LIST', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a new task in a target group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+
+    let groupRef: undefined | number = undefined
+
+    let newTaskItem: undefined | Task = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(listOfTask))
+      groupRef = 1
+
+      newState = addToList(copyOfPrevState, groupRef)
+      newTaskItem = newState[groupRef].tasks[0]
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('length of the list should be increased', () => {
+      const prevStateTargetGroupList = prevState[groupRef].tasks
+      const newStateTargetGroupList = newState[groupRef].tasks
+
+      expect(newStateTargetGroupList.length).to.be.eql(
+        prevStateTargetGroupList.length + 1
+      )
+    })
+
+    it('should add new task at the top of the list', () => {
+      const newStateTargetGroupList = newState[groupRef].tasks
+
+      expect(newTaskItem.id).to.be.eql(newStateTargetGroupList[0].id)
     })
   })
 })
