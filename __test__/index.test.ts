@@ -1,4 +1,5 @@
-const expect = require('chai').expect
+// const expect = require('chai').expect
+import { expect } from 'chai'
 
 describe('Dummy Test', () => {
   it('should succeed', (done) => {
@@ -14,6 +15,6 @@ describe('Dummy Test', () => {
   it('dummy test should fail', () => {
     const dummy = false
 
-    expect(dummy).to.be.true
+    expect(dummy).to.be.false
   })
 })
