@@ -241,6 +241,15 @@ describe('Edit A TASK ', () => {
 
       expect(editedTaskItem.content).to.be.eq(edit)
     })
+
+    it('should edit body of the task', () => {
+      edit = 'new task title'
+      const change = ChangeTarget.HEADING
+      newState = editList(copyOfPrevState, groupRef, taskRef, edit, change)
+      editedTaskItem = newState[groupRef].tasks[taskRef]
+
+      expect(editedTaskItem.heading).to.be.eq(edit)
+    })
   })
 })
 
