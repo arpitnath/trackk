@@ -8,6 +8,7 @@ type Props = {
   grpI: number
   label: string
   update: (groupIndex: number, edit: string) => void
+  deleteGroup: (groupIndex: number) => void
 }
 
 const TitleContainer: React.FC<Props> = ({
@@ -15,7 +16,8 @@ const TitleContainer: React.FC<Props> = ({
   numberOfTasks,
   update,
   grpI,
-  label
+  label,
+  deleteGroup
 }) => {
   const { updateGroupLabel } = useContext(GroupContext)
 
@@ -61,6 +63,7 @@ const TitleContainer: React.FC<Props> = ({
           grp={grpI}
           labelColor={styled}
           update={handleUpdateSelector}
+          deleteGroup={deleteGroup}
           count={numberOfTasks}
         />
         {openSelector && (

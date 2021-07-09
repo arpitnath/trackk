@@ -8,7 +8,8 @@ import {
   moveInsideCurrentList,
   moveToDifferentGroup,
   updateLabel,
-  addNewGroup
+  addNewGroup,
+  deleteGroup
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -221,7 +222,21 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     })
   }
 
-  const taskContext = { setState, updateGroupTitle, updateGroupLabel }
+  const deleteGroupList = (groupIndex: number) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = deleteGroup(copyOfPrevState, groupIndex)
+
+      return newState
+    })
+  }
+
+  const taskContext = {
+    setState,
+    updateGroupTitle,
+    updateGroupLabel,
+    deleteGroupList
+  }
 
   return (
     <GroupContext.Provider value={taskContext}>
@@ -538,10 +553,11 @@ const ListTitle: React.FC<{
   grpI: number
   label: string
 }> = ({ title, numberOfTasks, grpI, label }) => {
-  const { updateGroupTitle } = useContext(GroupContext)
+  const { updateGroupTitle, deleteGroupList } = useContext(GroupContext)
 
   return (
     <Title
+      deleteGroup={deleteGroupList}
       grpI={grpI}
       update={updateGroupTitle}
       numberOfTasks={numberOfTasks}

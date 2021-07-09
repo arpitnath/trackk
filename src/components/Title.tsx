@@ -13,6 +13,7 @@ type HeadProps = {
 type CountProps = {
   count: number
   update: () => void
+  deleteGroup: (index: number) => void
   labelColor: {
     color: {
       backgroundColor: string
@@ -80,7 +81,13 @@ const Head: React.FC<HeadProps> = ({ title, update, grpI, labelColor }) => {
   )
 }
 
-const Count: React.FC<CountProps> = ({ count, update, labelColor, grp }) => {
+const Count: React.FC<CountProps> = ({
+  count,
+  update,
+  labelColor,
+  grp,
+  deleteGroup
+}) => {
   return (
     <div className='grp-counter-wrapper'>
       <span className='group-length'>{count}</span>
@@ -92,7 +99,7 @@ const Count: React.FC<CountProps> = ({ count, update, labelColor, grp }) => {
         className='label-color'></div>
       <Button
         ClassName=''
-        onclickFunction={() => console.log('delete grp: ', grp)}
+        onclickFunction={() => deleteGroup(grp)}
         icon={'flat-color-icons:delete-database'}
       />
     </div>
