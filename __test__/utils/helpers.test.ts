@@ -351,7 +351,7 @@ describe('Add A NEW GROUP ', () => {
       prevState = listOfTask
       copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       newState = addNewGroup(copyOfPrevState)
-      newGroupId = newState[0].id
+      newGroupId = newState[newState.length - 1].id
     })
 
     after(() => {
@@ -366,10 +366,10 @@ describe('Add A NEW GROUP ', () => {
       expect(newData.length).to.be.eql(prevData.length + 1)
     })
 
-    it('should add new task at the top of the list', () => {
+    it('should add new group at the bottom of the list', () => {
       const newData = newState
 
-      expect(newGroupId).to.be.eql(newData[0].id)
+      expect(newGroupId).to.be.eql(newData[newData.length - 1].id)
     })
   })
 })

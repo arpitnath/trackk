@@ -122,7 +122,7 @@ export const addNewGroup = (_list: Data) => {
     tasks: [task]
   }
 
-  _list.unshift(newGroup)
+  _list.push(newGroup)
 
   return _list
 }
