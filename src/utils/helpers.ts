@@ -51,6 +51,16 @@ export const addToList = (_list: Data, index: number) => {
   return _list
 }
 
+export const editGroupTitle = (
+  _list: Data,
+  groupIndex: number,
+  payload: string
+) => {
+  _list[groupIndex].title = payload
+
+  return _list
+}
+
 export const editList = (
   array: Data,
   groupIndex: number,

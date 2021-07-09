@@ -3,18 +3,19 @@ import { useLocalStorgeState } from '../hooks/localStorageState'
 import {
   addToList,
   deletetask,
+  editGroupTitle,
   editList,
   moveInsideCurrentList,
   moveToDifferentGroup
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
-import { Button, Modal as ModalContainer } from '../containers'
+import { Button, Modal as ModalContainer, Title } from '../containers'
 import { Modal } from './'
 
 interface GroupComposition {
   Container: React.FC
   List: React.FC<GroupList>
-  ListTitle: React.FC<{ title: string }>
+  ListTitle: React.FC<{ title: string; numberOfTasks: number; grpI: number }>
   Block: React.FC<BlockProps>
 }
 
@@ -184,7 +185,16 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     })
   }
 
-  const taskContext = { setState }
+  const updateGroupTitle = (groupIndex: number, edit: string) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = editGroupTitle(copyOfPrevState, groupIndex, edit)
+
+      return newState
+    })
+  }
+
+  const taskContext = { setState, updateGroupTitle }
 
   return (
     <GroupContext.Provider value={taskContext}>
@@ -274,7 +284,11 @@ const GroupLists: React.FC<GroupList> = ({
   return (
     <div ref={_node} className='grp-list'>
       <div className='group-heading'>
-        <Groups.ListTitle title={title} />
+        <Groups.ListTitle
+          grpI={grpI}
+          title={title}
+          numberOfTasks={group.tasks.length}
+        />
         <Button onclickFunction={() => update(grpI)} icon={'carbon:add'} />
       </div>
       {group.tasks.map((item, itemI) => (
@@ -477,14 +491,19 @@ const GroupContainer: React.FC = ({ children }) => {
   return <div className='group-container'>{children}</div>
 }
 
-const ListTitle: React.FC<{ title: string }> = ({ title }) => {
+const ListTitle: React.FC<{
+  title: string
+  numberOfTasks: number
+  grpI: number
+}> = ({ title, numberOfTasks, grpI }) => {
+  const { updateGroupTitle } = useContext(GroupContext)
   return (
-    <p className='grp-title'>
-      {title}
-      <span role='img' aria-label='rocket'>
-        🚀
-      </span>
-    </p>
+    <Title
+      grpI={grpI}
+      update={updateGroupTitle}
+      numberOfTasks={numberOfTasks}
+      title={title}
+    />
   )
 }
 
