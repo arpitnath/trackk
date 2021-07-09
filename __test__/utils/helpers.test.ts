@@ -2,6 +2,7 @@ import { data } from '../../src/utils/defData'
 import {
   addNewGroup,
   addToList,
+  deleteGroup,
   deletetask,
   editGroupTitle,
   editList,
@@ -370,6 +371,40 @@ describe('Add A NEW GROUP ', () => {
       const newData = newState
 
       expect(newGroupId).to.be.eql(newData[newData.length - 1].id)
+    })
+  })
+})
+
+describe('DELETE GROUP ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a delete group with a group index ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let groupIndex: undefined | number = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupIndex = 0
+      newState = deleteGroup(copyOfPrevState, groupIndex)
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('should delete group from the list', () => {
+      const deleteGroup = prevState[0]
+      const newData = newState
+      const checkItemRemoved = newState.indexOf(deleteGroup)
+
+      expect(newData.length).to.be.eql(prevState.length - 1)
+      expect(checkItemRemoved).to.be.eql(-1)
     })
   })
 })

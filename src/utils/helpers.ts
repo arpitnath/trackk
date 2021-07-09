@@ -127,7 +127,7 @@ export const addNewGroup = (_list: Data) => {
   return _list
 }
 
-export const deleteGroup = (_list: Data, groupIndex) => {
+export const deleteGroup = (_list: Data, groupIndex: number) => {
   _list.splice(groupIndex, 1)
 
   return _list
