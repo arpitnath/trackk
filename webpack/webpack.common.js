@@ -32,6 +32,12 @@ module.exports = {
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: 'asset/resource'
+      },
+      //__test__
+      {
+        test: /test\.ts$/,
+        use: 'mocha-loader',
+        exclude: /node_modules/
       }
     ]
   },

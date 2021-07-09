@@ -51,6 +51,16 @@ export const addToList = (_list: Data, index: number) => {
   return _list
 }
 
+export const editGroupTitle = (
+  _list: Data,
+  groupIndex: number,
+  payload: string
+) => {
+  _list[groupIndex].title = payload
+
+  return _list
+}
+
 export const editList = (
   array: Data,
   groupIndex: number,
@@ -62,11 +72,11 @@ export const editList = (
   const targetTask = targetList[elementIndex]
 
   if (change === ChangeTarget.BODY) {
-    console.log('function call -- body --')
+    // console.log('function call -- body --')
 
     targetTask.content = edited
   } else if (change === ChangeTarget.HEADING) {
-    console.log('function call -- head --')
+    // console.log('function call -- head --')
     targetTask.heading = edited
   } else {
     return array
