@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Button } from '../containers'
 import { debounce } from '../utils/helpers'
 import { Color } from '../utils/labels'
 
@@ -88,6 +89,11 @@ const Count: React.FC<CountProps> = ({ count, update, labelColor }) => {
         role='none'
         onClick={update}
         className='label-color'></div>
+      <Button
+        ClassName=''
+        onclickFunction={() => console.log('delete grp')}
+        icon={'flat-color-icons:delete-database'}
+      />
     </div>
   )
 }
