@@ -1,5 +1,6 @@
 import { data } from '../../src/utils/defData'
 import {
+  addNewGroup,
   addToList,
   deletetask,
   editGroupTitle,
@@ -331,5 +332,44 @@ describe('UPDATE A GROUP LABEL ', () => {
     newState = updateLabel(copyOfPrevState, groupRef, payload)
 
     expect(newState[groupRef].label).to.be.eq(payload)
+  })
+})
+
+describe('Add A NEW GROUP ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a new group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let newGroupId: undefined | string
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      newState = addNewGroup(copyOfPrevState)
+      newGroupId = newState[0].id
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('length of the data should be increased', () => {
+      const prevData = prevState
+
+      const newData = newState
+
+      expect(newData.length).to.be.eql(prevData.length + 1)
+    })
+
+    it('should add new task at the top of the list', () => {
+      const newData = newState
+
+      expect(newGroupId).to.be.eql(newData[0].id)
+    })
   })
 })
