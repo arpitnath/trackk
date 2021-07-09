@@ -6,7 +6,8 @@ import {
   editGroupTitle,
   editList,
   moveInsideCurrentList,
-  moveToDifferentGroup
+  moveToDifferentGroup,
+  updateLabel
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -15,7 +16,12 @@ import { Modal } from './'
 interface GroupComposition {
   Container: React.FC
   List: React.FC<GroupList>
-  ListTitle: React.FC<{ title: string; numberOfTasks: number; grpI: number }>
+  ListTitle: React.FC<{
+    title: string
+    numberOfTasks: number
+    grpI: number
+    label: string
+  }>
   Block: React.FC<BlockProps>
 }
 
@@ -26,6 +32,7 @@ type Props = {
 type GroupList = {
   group: Group
   title: string
+  label: string
   dragging: boolean
   grpI: number
   getStyles: (_params: { grpI: number; itemI: number }) => string
@@ -194,7 +201,16 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     })
   }
 
-  const taskContext = { setState, updateGroupTitle }
+  const updateGroupLabel = (groupIndex: number, payload: string) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = updateLabel(copyOfPrevState, groupIndex, payload)
+
+      return newState
+    })
+  }
+
+  const taskContext = { setState, updateGroupTitle, updateGroupLabel }
 
   return (
     <GroupContext.Provider value={taskContext}>
@@ -211,6 +227,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
             getStyles={getStyles}
             grpI={grpI}
             title={group.title}
+            label={group.label}
             update={updateTaskList}
           />
         ))}
@@ -229,6 +246,7 @@ const GroupLists: React.FC<GroupList> = ({
   handleDragEnter,
   handleDragDrop,
   title,
+  label,
   update
 }) => {
   const _node: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
@@ -285,6 +303,7 @@ const GroupLists: React.FC<GroupList> = ({
     <div ref={_node} className='grp-list'>
       <div className='group-heading'>
         <Groups.ListTitle
+          label={label}
           grpI={grpI}
           title={title}
           numberOfTasks={group.tasks.length}
@@ -495,14 +514,17 @@ const ListTitle: React.FC<{
   title: string
   numberOfTasks: number
   grpI: number
-}> = ({ title, numberOfTasks, grpI }) => {
+  label: string
+}> = ({ title, numberOfTasks, grpI, label }) => {
   const { updateGroupTitle } = useContext(GroupContext)
+
   return (
     <Title
       grpI={grpI}
       update={updateGroupTitle}
       numberOfTasks={numberOfTasks}
       title={title}
+      label={label}
     />
   )
 }

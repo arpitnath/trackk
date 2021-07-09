@@ -2,6 +2,7 @@ export interface Group {
   id: string
   title: string
   tasks: Task[]
+  label: string
 }
 export type Data = Group[]
 

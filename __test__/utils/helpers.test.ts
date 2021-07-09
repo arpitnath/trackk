@@ -5,7 +5,8 @@ import {
   editGroupTitle,
   editList,
   moveInsideCurrentList,
-  moveToDifferentGroup
+  moveToDifferentGroup,
+  updateLabel
 } from '../../src/utils/helpers'
 import { expect } from 'chai'
 import { ChangeTarget, Data, Group, Task } from '../../src/utils/types'
@@ -308,5 +309,27 @@ describe('EDIT A GROUP TITLE ', () => {
     newState = editGroupTitle(copyOfPrevState, groupRef, payload)
 
     expect(newState[groupRef].title).to.be.eq(payload)
+  })
+})
+
+describe('UPDATE A GROUP LABEL ', () => {
+  let listOfTask: undefined | Data = undefined
+  let prevState: undefined | Data = undefined
+  let copyOfPrevState: undefined | Data = undefined
+  let newState: undefined | Data = undefined
+
+  let groupRef: undefined | number = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+    prevState = listOfTask
+    copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+    groupRef = 1
+  })
+
+  it('should update the group title', () => {
+    const payload = 'red'
+    newState = updateLabel(copyOfPrevState, groupRef, payload)
+
+    expect(newState[groupRef].label).to.be.eq(payload)
   })
 })

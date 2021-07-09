@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Title } from '../components'
+import { GroupContext } from '../components/Groups'
+import { lableColors } from '../utils/labels'
 type Props = {
   title: string
   numberOfTasks: number
   grpI: number
+  label: string
   update: (groupIndex: number, edit: string) => void
 }
 
@@ -11,13 +14,57 @@ const TitleContainer: React.FC<Props> = ({
   title,
   numberOfTasks,
   update,
-  grpI
+  grpI,
+  label
 }) => {
+  const { updateGroupLabel } = useContext(GroupContext)
+
+  const [labelColor, setLabelColor] = useState(label)
+  const [openSelector, setOpenSelector] = useState(false)
+
+  const updateColor = (arg: string) => {
+    console.log('update color', arg)
+    setLabelColor(arg)
+    setOpenSelector(false)
+  }
+
+  const handleUpdateSelector = () => {
+    console.log(
+      `%c selector state => ${openSelector}`,
+      'color: hsl(205, 89%, 70%)'
+    )
+
+    setOpenSelector(true)
+  }
+
+  const styled = {
+    color: {
+      backgroundColor: labelColor
+    }
+  }
+
+  useEffect(() => {
+    updateGroupLabel(grpI, labelColor)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [labelColor, grpI])
+
   return (
     <Title.Wrapper>
       <Title>
-        <Title.Head grpI={grpI} title={title} update={update} />
-        <Title.Count count={numberOfTasks} />
+        <Title.Head
+          labelColor={labelColor}
+          grpI={grpI}
+          title={title}
+          update={update}
+        />
+        <Title.Count
+          labelColor={styled}
+          update={handleUpdateSelector}
+          count={numberOfTasks}
+        />
+        {openSelector && (
+          <Title.ColorSelector colors={lableColors} update={updateColor} />
+        )}
       </Title>
     </Title.Wrapper>
   )
