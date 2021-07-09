@@ -1,6 +1,8 @@
 import { data } from '../../src/utils/defData'
 import {
+  addNewGroup,
   addToList,
+  deleteGroup,
   deletetask,
   editGroupTitle,
   editList,
@@ -331,5 +333,78 @@ describe('UPDATE A GROUP LABEL ', () => {
     newState = updateLabel(copyOfPrevState, groupRef, payload)
 
     expect(newState[groupRef].label).to.be.eq(payload)
+  })
+})
+
+describe('Add A NEW GROUP ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a new group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let newGroupId: undefined | string
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      newState = addNewGroup(copyOfPrevState)
+      newGroupId = newState[newState.length - 1].id
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('length of the data should be increased', () => {
+      const prevData = prevState
+
+      const newData = newState
+
+      expect(newData.length).to.be.eql(prevData.length + 1)
+    })
+
+    it('should add new group at the bottom of the list', () => {
+      const newData = newState
+
+      expect(newGroupId).to.be.eql(newData[newData.length - 1].id)
+    })
+  })
+})
+
+describe('DELETE GROUP ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a delete group with a group index ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let groupIndex: undefined | number = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupIndex = 0
+      newState = deleteGroup(copyOfPrevState, groupIndex)
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('should delete group from the list', () => {
+      const deleteGroup = prevState[0]
+      const newData = newState
+      const checkItemRemoved = newState.indexOf(deleteGroup)
+
+      expect(newData.length).to.be.eql(prevState.length - 1)
+      expect(checkItemRemoved).to.be.eql(-1)
+    })
   })
 })

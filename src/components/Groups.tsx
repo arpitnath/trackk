@@ -7,7 +7,9 @@ import {
   editList,
   moveInsideCurrentList,
   moveToDifferentGroup,
-  updateLabel
+  updateLabel,
+  addNewGroup,
+  deleteGroup
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -23,6 +25,7 @@ interface GroupComposition {
     label: string
   }>
   Block: React.FC<BlockProps>
+  AddNew: React.FC<{ addGroup: () => void }>
 }
 
 type Props = {
@@ -210,7 +213,30 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
     })
   }
 
-  const taskContext = { setState, updateGroupTitle, updateGroupLabel }
+  const addNewGrp = () => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = addNewGroup(copyOfPrevState)
+
+      return newState
+    })
+  }
+
+  const deleteGroupList = (groupIndex: number) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = deleteGroup(copyOfPrevState, groupIndex)
+
+      return newState
+    })
+  }
+
+  const taskContext = {
+    setState,
+    updateGroupTitle,
+    updateGroupLabel,
+    deleteGroupList
+  }
 
   return (
     <GroupContext.Provider value={taskContext}>
@@ -231,6 +257,7 @@ const Groups: React.FC<Props> & GroupComposition = ({ data }) => {
             update={updateTaskList}
           />
         ))}
+        <Groups.AddNew addGroup={addNewGrp} />
       </div>
     </GroupContext.Provider>
   )
@@ -308,7 +335,11 @@ const GroupLists: React.FC<GroupList> = ({
           title={title}
           numberOfTasks={group.tasks.length}
         />
-        <Button onclickFunction={() => update(grpI)} icon={'carbon:add'} />
+        <Button
+          ClassName=''
+          onclickFunction={() => update(grpI)}
+          icon={'carbon:add'}
+        />
       </div>
       {group.tasks.map((item, itemI) => (
         <Groups.Block
@@ -480,14 +511,20 @@ const Block: React.FC<BlockProps> = ({
           )}
           <div className='btn-container'>
             <Button
+              ClassName=''
               onclickFunction={() => handleClick(grpI, itemI)}
               icon={'mdi:fountain-pen-tip'}
             />
             <Button
+              ClassName=''
               onclickFunction={() => handleDeleteTask(grpI, itemI)}
               icon={'fluent:delete-off-20-filled'}
             />
-            <Button onclickFunction={openModal} icon={'cil:options'} />
+            <Button
+              ClassName=''
+              onclickFunction={openModal}
+              icon={'cil:options'}
+            />
           </div>
         </div>
       ) : (
@@ -516,10 +553,11 @@ const ListTitle: React.FC<{
   grpI: number
   label: string
 }> = ({ title, numberOfTasks, grpI, label }) => {
-  const { updateGroupTitle } = useContext(GroupContext)
+  const { updateGroupTitle, deleteGroupList } = useContext(GroupContext)
 
   return (
     <Title
+      deleteGroup={deleteGroupList}
       grpI={grpI}
       update={updateGroupTitle}
       numberOfTasks={numberOfTasks}
@@ -529,9 +567,20 @@ const ListTitle: React.FC<{
   )
 }
 
+const AddNew: React.FC<{ addGroup: () => void }> = ({ addGroup }) => {
+  return (
+    <Button
+      ClassName='new-group-btn'
+      onclickFunction={addGroup}
+      icon={'fluent:apps-add-in-24-filled'}
+    />
+  )
+}
+
 Groups.Container = GroupContainer
 Groups.List = GroupLists
 Groups.ListTitle = ListTitle
 Groups.Block = Block
+Groups.AddNew = AddNew
 
 export default Groups

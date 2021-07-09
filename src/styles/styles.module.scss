@@ -283,6 +283,15 @@ Groups Styles
   border: 2px solid red;
 }
 
+.new-group-btn {
+  color: var.$grey-9;
+  height: 36px !important;
+  width: 46px !important;
+
+  &:hover {
+    color: var.$grey-10;
+  }
+}
 /*
 =============== 
 Buttons Styles
@@ -290,7 +299,6 @@ Buttons Styles
 */
 
 .button-wrapper {
-  @include button-wrapper(false);
   height: 34px;
   width: 34px;
   margin-top: -2px;
