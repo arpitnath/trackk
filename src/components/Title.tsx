@@ -35,15 +35,6 @@ const Head: React.FC<{
   const handleChange = (e: any) => {
     setState(e.target.value)
     debouncedUpdaterCall(e.target.value)
-
-    // if (state.length > 7) {
-    //   console.log('> 7')
-
-    //   setWidth((prev) => prev + 8)
-    // } else if (state.length < 5) {
-    //   console.log('< 7')
-    //   setWidth(50)
-    // }
   }
 
   const updaterCall = (value: string) => {
@@ -58,10 +49,8 @@ const Head: React.FC<{
   )
 
   useEffect(() => {
-    if (state.length > 7) {
-      setWidth((prev) => prev + state.length + 10)
-    } else {
-      setWidth(65)
+    if (state.length > 6) {
+      setWidth((prev) => prev + state.length + (state.length - 8) * 5)
     }
   }, [state])
 
