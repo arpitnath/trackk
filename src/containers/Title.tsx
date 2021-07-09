@@ -58,6 +58,7 @@ const TitleContainer: React.FC<Props> = ({
           update={update}
         />
         <Title.Count
+          grp={grpI}
           labelColor={styled}
           update={handleUpdateSelector}
           count={numberOfTasks}

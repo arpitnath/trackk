@@ -18,6 +18,7 @@ type CountProps = {
       backgroundColor: string
     }
   }
+  grp: number
 }
 interface TitleComposition {
   Wrapper: React.FC
@@ -79,7 +80,7 @@ const Head: React.FC<HeadProps> = ({ title, update, grpI, labelColor }) => {
   )
 }
 
-const Count: React.FC<CountProps> = ({ count, update, labelColor }) => {
+const Count: React.FC<CountProps> = ({ count, update, labelColor, grp }) => {
   return (
     <div className='grp-counter-wrapper'>
       <span className='group-length'>{count}</span>
@@ -91,7 +92,7 @@ const Count: React.FC<CountProps> = ({ count, update, labelColor }) => {
         className='label-color'></div>
       <Button
         ClassName=''
-        onclickFunction={() => console.log('delete grp')}
+        onclickFunction={() => console.log('delete grp: ', grp)}
         icon={'flat-color-icons:delete-database'}
       />
     </div>

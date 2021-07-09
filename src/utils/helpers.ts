@@ -127,6 +127,12 @@ export const addNewGroup = (_list: Data) => {
   return _list
 }
 
+export const deleteGroup = (_list: Data, groupIndex) => {
+  _list.splice(groupIndex, 1)
+
+  return _list
+}
+
 export const debounce = (
   fn: (...args: any[]) => void,
   delay: number
