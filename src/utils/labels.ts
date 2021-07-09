@@ -32,7 +32,7 @@ export const lableColors: Color[] = [
     id: 'green_02',
     color: 'olive',
     style: {
-      backgroundColor: 'hsl(106, 21%, 66%)'
+      backgroundColor: 'hsl(106, 61%, 66%)'
     }
   },
   {

@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Title } from '../components'
+import { GroupContext } from '../components/Groups'
 import { lableColors } from '../utils/labels'
 type Props = {
   title: string
   numberOfTasks: number
   grpI: number
+  label: string
   update: (groupIndex: number, edit: string) => void
 }
 
@@ -12,9 +14,12 @@ const TitleContainer: React.FC<Props> = ({
   title,
   numberOfTasks,
   update,
-  grpI
+  grpI,
+  label
 }) => {
-  const [labelColor, setLabelColor] = useState('hsl(205, 59%, 80%)')
+  const { updateGroupLabel } = useContext(GroupContext)
+
+  const [labelColor, setLabelColor] = useState(label)
   const [openSelector, setOpenSelector] = useState(false)
 
   const updateColor = (arg: string) => {
@@ -37,6 +42,11 @@ const TitleContainer: React.FC<Props> = ({
       backgroundColor: labelColor
     }
   }
+
+  useEffect(() => {
+    updateGroupLabel(grpI, labelColor)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [labelColor, grpI])
 
   return (
     <Title.Wrapper>
