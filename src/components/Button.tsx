@@ -3,7 +3,7 @@ import { ButtonProps } from '../utils/types'
 
 interface ButtonComposition {
   Wrapper: React.FC
-  Title: React.FC
+  Title: React.FC<{ title: string }>
   Icon: React.FC
 }
 
@@ -21,6 +21,7 @@ const Button: React.FC<ButtonProps> & ButtonComposition = ({
   _className
 }) => {
   const btnProps = { icon, title, _className }
+
   return (
     <ButtonContext.Provider value={btnProps}>
       <div
@@ -36,12 +37,17 @@ const Button: React.FC<ButtonProps> & ButtonComposition = ({
 }
 
 const Wrapper: React.FC = ({ children }) => {
-  return <div className={`button-wrapper`}>{children}</div>
+  const { _className } = React.useContext(ButtonContext)
+
+  return (
+    <div className={_className === '' ? 'button-wrapper' : _className}>
+      {children}
+    </div>
+  )
 }
 
-const Title: React.FC = () => {
-  const { title } = React.useContext(ButtonContext)
-  return <div className='button-title'>{title}</div>
+const Title: React.FC<{ title: string }> = ({ title }) => {
+  return <div className={`button-title`}>{title}</div>
 }
 
 const Icon: React.FC = () => {

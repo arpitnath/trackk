@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Button } from '../containers'
 import { debounce } from '../utils/helpers'
 import { Color } from '../utils/labels'
 
@@ -12,11 +13,13 @@ type HeadProps = {
 type CountProps = {
   count: number
   update: () => void
+  deleteGroup: (index: number) => void
   labelColor: {
     color: {
       backgroundColor: string
     }
   }
+  grp: number
 }
 interface TitleComposition {
   Wrapper: React.FC
@@ -78,7 +81,13 @@ const Head: React.FC<HeadProps> = ({ title, update, grpI, labelColor }) => {
   )
 }
 
-const Count: React.FC<CountProps> = ({ count, update, labelColor }) => {
+const Count: React.FC<CountProps> = ({
+  count,
+  update,
+  labelColor,
+  grp,
+  deleteGroup
+}) => {
   return (
     <div className='grp-counter-wrapper'>
       <span className='group-length'>{count}</span>
@@ -88,6 +97,11 @@ const Count: React.FC<CountProps> = ({ count, update, labelColor }) => {
         role='none'
         onClick={update}
         className='label-color'></div>
+      <Button
+        ClassName=''
+        onclickFunction={() => deleteGroup(grp)}
+        icon={'flat-color-icons:delete-database'}
+      />
     </div>
   )
 }

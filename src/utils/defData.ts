@@ -18,7 +18,7 @@ export const data: Data = [
       },
       {
         id: 'demo#3',
-        heading: 'thired',
+        heading: 'third',
         content: 'demo content'
       },
       {

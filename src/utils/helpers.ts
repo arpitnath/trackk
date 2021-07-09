@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeTarget, Data } from './types'
+import { ChangeTarget, Data, Group } from './types'
 import { v4 as uuid } from 'uuid'
 
 export const moveToDifferentGroup = (
@@ -107,6 +107,30 @@ export const deletetask = (
   targetList.splice(taskIndex, 1)
 
   return array
+}
+
+export const addNewGroup = (_list: Data) => {
+  const task = {
+    id: uuid(),
+    heading: 'untitled',
+    content: 'Please enter a text'
+  }
+  const newGroup: Group = {
+    id: uuid(),
+    title: 'new',
+    label: 'hsl(205, 59%, 80%)',
+    tasks: [task]
+  }
+
+  _list.push(newGroup)
+
+  return _list
+}
+
+export const deleteGroup = (_list: Data, groupIndex: number) => {
+  _list.splice(groupIndex, 1)
+
+  return _list
 }
 
 export const debounce = (
