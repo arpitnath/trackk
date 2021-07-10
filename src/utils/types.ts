@@ -18,9 +18,14 @@ export type Task = {
   id: string
   heading: string
   content: string
+  tags: Tag[]
 }
 
 export enum ChangeTarget {
   HEADING = 'heading',
   BODY = 'content'
+}
+export type Tag = {
+  id: string
+  tag: string
 }

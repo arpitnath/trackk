@@ -9,7 +9,8 @@ import {
   moveToDifferentGroup,
   updateLabel,
   addNewGroup,
-  deleteGroup
+  deleteGroup,
+  addTag
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -353,6 +354,7 @@ const GroupLists: React.FC<GroupList> = ({
           handleDragDrop={handleDragDrop}
           grpI={grpI}
           itemI={itemI}
+          color={group.label}
         />
       ))}
     </div>
@@ -380,6 +382,7 @@ type BlockProps = {
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
   ) => void
+  color: string
 }
 
 const Block: React.FC<BlockProps> = ({
@@ -391,13 +394,14 @@ const Block: React.FC<BlockProps> = ({
   itemI,
   handleDragEnd,
   handleDragEnter,
-  handleDragDrop
+  handleDragDrop,
+  color
 }) => {
   const { setState } = useContext(GroupContext)
 
   const [newTask, setNewTask] = useState(item.heading)
 
-  const [taskState, setTaskState] = useState<boolean>(false)
+  const [taskState, setTaskState] = useState<boolean>(false) //if true we can edit the task title in the board
 
   const [elementLocation, setElementLocation] = useState<Location>({
     groupIndex: grpI,
@@ -423,12 +427,8 @@ const Block: React.FC<BlockProps> = ({
   const handleUpdateTask = (modalFlag: boolean) => {
     setTaskState(false)
 
-    console.log(`%c --MODAL FLAG-- => ${modalFlag}`, 'color: #fffb00')
     const { groupIndex, itemIndex } = elementLocation
 
-    console.log(`%c --TASK-STATE-- => ${taskState}`, 'color: red')
-    console.log(`%c --groupIndex-- => ${groupIndex}`, 'color: #ff9292')
-    console.log(`%c --itemIndex-- => ${itemIndex}`, 'color: #92ddff')
     setState((prevState: Data) => {
       const _target = !modalFlag ? ChangeTarget.HEADING : ChangeTarget.BODY
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
@@ -448,6 +448,15 @@ const Block: React.FC<BlockProps> = ({
     setState((prevState: Data) => {
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       const newState = deletetask(copyOfPrevState, groupIndex, taskIndex)
+
+      return newState
+    })
+  }
+
+  const updatetags = (tag: string) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = addTag(copyOfPrevState, grpI, itemI, tag)
 
       return newState
     })
@@ -506,7 +515,13 @@ const Block: React.FC<BlockProps> = ({
 
           {showModal && (
             <Modal callback={setShowModal}>
-              <ModalContainer elementLocation={elementLocation} data={item} />
+              <ModalContainer
+                update={updatetags}
+                color={color}
+                tags={item.tags}
+                elementLocation={elementLocation}
+                data={item}
+              />
             </Modal>
           )}
           <div className='btn-container'>

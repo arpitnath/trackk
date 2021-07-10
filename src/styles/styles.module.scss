@@ -416,6 +416,13 @@ Modal Styles
   @include section;
 }
 
+.modal-headopt-container {
+  // border: 2px solid olivedrab;
+  @include section;
+  height: 85%;
+  padding: var.$d0 0;
+}
+
 .header-section {
   input {
     width: 100%;

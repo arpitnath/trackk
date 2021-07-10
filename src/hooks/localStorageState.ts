@@ -1,9 +1,9 @@
 import React from 'react'
-import { Data, Group } from '../utils/types'
+import { Data, Group, Tag } from '../utils/types'
 
 export const useLocalStorgeState = (
   key: string,
-  defaultValue: Data | (() => Data),
+  defaultValue: Data | (() => Data) | Tag[],
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
   const [state, setState] = React.useState(() => {
@@ -37,17 +37,30 @@ export const useLocalStorgeState = (
       window.localStorage.removeItem(prevKey)
     }
 
-    state?.forEach((group: Group) => {
-      group.tasks?.forEach((arr) => {
-        if (arr === undefined || arr === null) {
-          setState((prevState: Data) => {
-            const copyPrev = JSON.parse(JSON.stringify(prevState))
-            const newState = copyPrev.tasks?.splice(group.tasks.indexOf(arr), 1)
-            return newState
-          })
-        }
+    if (key === 'board') {
+      state?.forEach((group: Group) => {
+        group.tasks?.forEach((arr) => {
+          if (arr === undefined || arr === null) {
+            setState((prevState: Data) => {
+              const copyPrev = JSON.parse(JSON.stringify(prevState))
+              const newState = copyPrev.tasks?.splice(
+                group.tasks.indexOf(arr),
+                1
+              )
+              return newState
+            })
+          }
+        })
       })
-    })
+    }
+    // else {
+    //   setState((prevState: Tag[]) => {
+    //     const copyPrev = JSON.parse(JSON.stringify(prevState))
+    //     const newState = copyPrev
+
+    //     return newState
+    //   })
+    // }
 
     prevKeyRef.current = key
     window.localStorage.setItem(key, serialize(state))

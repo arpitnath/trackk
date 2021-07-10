@@ -1,0 +1,92 @@
+@use 'variables' as var;
+
+.tag-container {
+  background-color: transparent;
+  min-height: 24px;
+  font-size: var.$font-size-5;
+  padding: 0;
+  display: flex;
+  cursor: default;
+}
+
+.main-wrapper {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: none;
+}
+
+.tag-wrapper {
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, 80px);
+}
+
+.tag-list {
+  width: var.$fixed-width;
+  max-width: var.$max-width;
+  height: 100%;
+  border-radius: var.$radius;
+  display: flex;
+}
+
+.tag-block {
+  padding: 8px;
+  margin-right: 8px;
+  box-shadow: var.$light-shadow;
+  border-radius: var.$radius;
+  background-color: var.$primary-10;
+  max-width: fit-content !important;
+}
+
+.add-container {
+  width: auto;
+  display: flex;
+
+  input {
+    font-size: var.$font-size-5;
+    padding: 0.5rem;
+  }
+
+  .tag-btn {
+    border-radius: 50%;
+    @include dimensions(34px, 34px);
+
+    &:hover {
+      background-color: var.$primary-9 !important;
+    }
+
+    .tag-check-btn {
+      margin-left: 0px;
+      margin-top: 6px;
+    }
+  }
+}
+
+.savedtags-container {
+  border: 2px solid var.$primary-10;
+  border-radius: var.$radius;
+  filter: contrast(80%);
+  display: flex;
+  width: 550px;
+  height: auto;
+  padding: 25px;
+  padding-left: 35px;
+  box-shadow: var.$dark-shadow;
+  margin-left: 6rem;
+  margin-top: -1rem;
+}
+
+.saved-wrapper {
+  display: grid;
+  margin-top: 1rem;
+  p {
+    color: var.$grey-8;
+    font-size: var.$font-size-4;
+    font-style: italic;
+    margin-left: 6rem;
+  }
+}

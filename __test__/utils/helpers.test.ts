@@ -1,7 +1,11 @@
 import { data } from '../../src/utils/defData'
+import { savedTags } from '../../src/utils/labels'
 import {
   addNewGroup,
+  addTag,
   addToList,
+  addToSavetags,
+  checkTagExits,
   deleteGroup,
   deletetask,
   editGroupTitle,
@@ -11,7 +15,7 @@ import {
   updateLabel
 } from '../../src/utils/helpers'
 import { expect } from 'chai'
-import { ChangeTarget, Data, Group, Task } from '../../src/utils/types'
+import { ChangeTarget, Data, Group, Tag, Task } from '../../src/utils/types'
 
 describe('MOVE TASK TO A DIFFERENT GROUP', () => {
   let listOfTask: undefined | Data = undefined
@@ -405,6 +409,121 @@ describe('DELETE GROUP ', () => {
 
       expect(newData.length).to.be.eql(prevState.length - 1)
       expect(checkItemRemoved).to.be.eql(-1)
+    })
+  })
+})
+
+describe('ADD TAG ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a tag to a given task list of a group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let groupIndex: undefined | number = undefined
+    let taskIndex: undefined | number = undefined
+    let payload: undefined | string = undefined
+
+    beforeEach(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupIndex = 0
+      taskIndex = 0
+      payload = '🔐 Locked'
+      newState = addTag(copyOfPrevState, groupIndex, taskIndex, payload)
+    })
+
+    afterEach(() => {
+      prevState = undefined
+      copyOfPrevState = undefined
+      groupIndex = undefined
+      taskIndex = undefined
+      payload = undefined
+      newState = undefined
+    })
+
+    it('should return true if the tag does not exits in the list', () => {
+      const copyOfTagsState = prevState[groupIndex].tasks[taskIndex].tags
+      const flag = checkTagExits(copyOfTagsState, payload)
+
+      expect(flag).to.be.true
+    })
+
+    it('should returnn false if task exits', () => {
+      const copyOfTagsState = copyOfPrevState[groupIndex].tasks[taskIndex].tags
+      const testPayload = payload
+
+      const flag = checkTagExits(copyOfTagsState, testPayload)
+      expect(flag).to.be.false
+    })
+
+    it('should add tag to the task tag list', () => {
+      const prevTags = prevState[groupIndex].tasks[taskIndex].tags
+
+      const payload = '🔐 Locked'
+
+      const newTags = newState[groupIndex].tasks[taskIndex].tags
+
+      expect(newTags.length).to.be.eql(prevTags.length + 1)
+      expect(newTags[newTags.length - 1].tag).to.be.eql(payload)
+    })
+  })
+})
+
+describe('ADD TAGS TO THE TAGLIST', () => {
+  let listOfTags: undefined | Tag[] = undefined
+  before(() => {
+    listOfTags = JSON.parse(JSON.stringify(savedTags))
+  })
+
+  describe('should add a tag to the tag-list', () => {
+    let prevState: undefined | Tag[] = undefined
+    let copyOfPrevState: undefined | Tag[] = undefined
+    let newState: undefined | Tag[] = undefined
+    let payload: undefined | string = undefined
+
+    beforeEach(() => {
+      prevState = listOfTags
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      payload = '🔐 Locked'
+      newState = addToSavetags(copyOfPrevState, payload)
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('should return true if the tag does not exits in the list', () => {
+      const flag = checkTagExits(prevState, payload)
+
+      expect(flag).to.be.true
+    })
+
+    it('should returnn false if task exits', () => {
+      const testPayload = payload
+
+      const flag = checkTagExits(newState, testPayload)
+      expect(flag).to.be.false
+    })
+
+    it('should add tag to the list', () => {
+      const newTags = newState[newState.length - 1]
+
+      expect(newState.length).to.be.eql(prevState.length + 1)
+      expect(newTags.tag).to.be.eql(payload)
+    })
+    it('should not add tag to the list if it exists', () => {
+      const newPayload = '🔐 Locked'
+
+      const _newState = addToSavetags(copyOfPrevState, newPayload)
+
+      expect(newState.length).to.be.eql(_newState.length)
+      expect(newState[newState.length - 1].tag).to.be.eql(
+        _newState[newState.length - 1].tag
+      )
     })
   })
 })

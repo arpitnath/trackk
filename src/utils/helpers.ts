@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeTarget, Data, Group } from './types'
+import { ChangeTarget, Data, Group, Tag } from './types'
 import { v4 as uuid } from 'uuid'
 
 export const moveToDifferentGroup = (
@@ -42,7 +42,8 @@ export const addToList = (_list: Data, index: number) => {
   const newElement = {
     id: uuid(),
     heading: 'untitled',
-    content: 'Please enter a text'
+    content: 'Please enter a text',
+    tags: [{ id: uuid(), tag: '🔥 urgent' }]
   }
 
   const targetList = _list[index].tasks
@@ -113,7 +114,8 @@ export const addNewGroup = (_list: Data) => {
   const task = {
     id: uuid(),
     heading: 'untitled',
-    content: 'Please enter a text'
+    content: 'Please enter a text',
+    tags: [{ id: uuid(), tag: '🔥 urgent' }]
   }
   const newGroup: Group = {
     id: uuid(),
@@ -131,6 +133,58 @@ export const deleteGroup = (_list: Data, groupIndex: number) => {
   _list.splice(groupIndex, 1)
 
   return _list
+}
+
+export const addTag = (
+  _list: Data,
+  groupIndex: number,
+  taskIndex: number,
+  payload: string
+) => {
+  const targetList = _list[groupIndex].tasks[taskIndex].tags
+
+  const flag = checkTagExits(targetList, payload)
+  if (flag) {
+    const newTag = {
+      id: uuid(),
+      tag: payload
+    }
+
+    targetList.push(newTag)
+  }
+
+  return _list
+}
+
+export const addToSavetags = (arr: Tag[], payload: string) => {
+  const flag = checkTagExits(arr, payload)
+
+  if (flag) {
+    const newTag: Tag = {
+      id: uuid(),
+      tag: payload
+    }
+
+    if (arr.length >= 6) {
+      arr.shift()
+    }
+    arr.push(newTag)
+  }
+
+  return arr
+}
+
+export const checkTagExits = (arr: Tag[], tag: string) => {
+  let flag = true
+
+  for (let i = 0; i < arr.length; i++) {
+    const tagInArr = arr[i].tag
+
+    if (tagInArr === tag) {
+      flag = false
+    }
+  }
+  return flag
 }
 
 export const debounce = (
