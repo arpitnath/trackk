@@ -5,6 +5,7 @@ import {
   addTag,
   addToList,
   addToSavetags,
+  checkTagExits,
   deleteGroup,
   deletetask,
   editGroupTitle,
@@ -424,24 +425,46 @@ describe('ADD TAG ', () => {
     let newState: undefined | Data = undefined
     let groupIndex: undefined | number = undefined
     let taskIndex: undefined | number = undefined
+    let payload: undefined | string = undefined
 
-    before(() => {
+    beforeEach(() => {
       prevState = listOfTask
       copyOfPrevState = JSON.parse(JSON.stringify(prevState))
       groupIndex = 0
       taskIndex = 0
+      payload = '🔐 Locked'
+      newState = addTag(copyOfPrevState, groupIndex, taskIndex, payload)
     })
 
-    after(() => {
+    afterEach(() => {
       prevState = undefined
+      copyOfPrevState = undefined
+      groupIndex = undefined
+      taskIndex = undefined
+      payload = undefined
+      newState = undefined
     })
 
-    it('should delete group from the list', () => {
+    it('should return true if the tag does not exits in the list', () => {
+      const copyOfTagsState = prevState[groupIndex].tasks[taskIndex].tags
+      const flag = checkTagExits(copyOfTagsState, payload)
+
+      expect(flag).to.be.true
+    })
+
+    it('should returnn false if task exits', () => {
+      const copyOfTagsState = copyOfPrevState[groupIndex].tasks[taskIndex].tags
+      const testPayload = payload
+
+      const flag = checkTagExits(copyOfTagsState, testPayload)
+      expect(flag).to.be.false
+    })
+
+    it('should add tag to the task tag list', () => {
       const prevTags = prevState[groupIndex].tasks[taskIndex].tags
 
       const payload = '🔐 Locked'
 
-      newState = addTag(copyOfPrevState, groupIndex, taskIndex, payload)
       const newTags = newState[groupIndex].tasks[taskIndex].tags
 
       expect(newTags.length).to.be.eql(prevTags.length + 1)
@@ -450,7 +473,7 @@ describe('ADD TAG ', () => {
   })
 })
 
-describe('ADD TAGS', () => {
+describe('ADD TAGS TO THE TAGLIST', () => {
   let listOfTags: undefined | Tag[] = undefined
   before(() => {
     listOfTags = JSON.parse(JSON.stringify(savedTags))
@@ -471,6 +494,19 @@ describe('ADD TAGS', () => {
 
     after(() => {
       prevState = undefined
+    })
+
+    it('should return true if the tag does not exits in the list', () => {
+      const flag = checkTagExits(prevState, payload)
+
+      expect(flag).to.be.true
+    })
+
+    it('should returnn false if task exits', () => {
+      const testPayload = payload
+
+      const flag = checkTagExits(newState, testPayload)
+      expect(flag).to.be.false
     })
 
     it('should add tag to the list', () => {
