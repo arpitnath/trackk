@@ -159,6 +159,26 @@ export const addTag = (
 
   return _list
 }
+export const deleteTag = (
+  _list: Data,
+  groupIndex: number,
+  taskIndex: number,
+  tagId: string
+) => {
+  const targetTaskTags = _list[groupIndex].tasks[taskIndex].tags
+
+  let index: undefined | number = undefined
+
+  const toRemoveTag = targetTaskTags.find((tag) => tag.id === tagId)
+
+  if (toRemoveTag) {
+    index = targetTaskTags.indexOf(toRemoveTag)
+
+    targetTaskTags.splice(index, 1)
+  }
+
+  return _list
+}
 
 export const addToSavetags = (arr: Tag[], payload: string) => {
   const flag = checkTagExits(arr, payload)

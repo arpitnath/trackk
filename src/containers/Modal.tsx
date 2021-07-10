@@ -10,6 +10,7 @@ type Props = {
   elementLocation: Location
   color: string
   update: (tag: string) => void
+  removeTags: (arg: string) => void
 }
 
 const ModalContainer: React.FC<Props> = ({
@@ -17,7 +18,8 @@ const ModalContainer: React.FC<Props> = ({
   elementLocation,
   tags,
   color,
-  update
+  update,
+  removeTags
 }) => {
   const { setState } = useContext(GroupContext)
 
@@ -31,7 +33,12 @@ const ModalContainer: React.FC<Props> = ({
           title={data.heading}>
           <Modal.HeaderOptions>
             {/* Tags will go */}
-            <Tags update={update} color={color} tags={tags} />
+            <Tags
+              remove={removeTags}
+              update={update}
+              color={color}
+              tags={tags}
+            />
           </Modal.HeaderOptions>
         </Modal.HeaderBody>
       </Modal.Header>
