@@ -42,7 +42,8 @@ export const addToList = (_list: Data, index: number) => {
   const newElement = {
     id: uuid(),
     heading: 'untitled',
-    content: 'Please enter a text'
+    content: 'Please enter a text',
+    tags: [{ id: uuid(), tag: '🔥 urgent' }]
   }
 
   const targetList = _list[index].tasks
@@ -113,7 +114,8 @@ export const addNewGroup = (_list: Data) => {
   const task = {
     id: uuid(),
     heading: 'untitled',
-    content: 'Please enter a text'
+    content: 'Please enter a text',
+    tags: [{ id: uuid(), tag: '🔥 urgent' }]
   }
   const newGroup: Group = {
     id: uuid(),
@@ -129,6 +131,23 @@ export const addNewGroup = (_list: Data) => {
 
 export const deleteGroup = (_list: Data, groupIndex: number) => {
   _list.splice(groupIndex, 1)
+
+  return _list
+}
+
+export const addTag = (
+  _list: Data,
+  groupIndex: number,
+  taskIndex: number,
+  payload: string
+) => {
+  const targetList = _list[groupIndex].tasks[taskIndex].tags
+  const newTag = {
+    id: uuid(),
+    tag: payload
+  }
+
+  targetList.push(newTag)
 
   return _list
 }

@@ -12,8 +12,16 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
+          },
+          {
+            id: 'demotag_1',
+            tag: '🐞 Bugs'
+          },
+          {
+            id: 'demotag_2',
+            tag: '🔥 urgent'
           }
         ]
       },
@@ -23,7 +31,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -34,7 +42,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -45,7 +53,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -63,7 +71,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -74,7 +82,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -85,7 +93,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -103,7 +111,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]
@@ -121,7 +129,7 @@ export const data: Data = [
         content: 'demo content',
         tags: [
           {
-            id: 'demotag',
+            id: 'demotag_0',
             tag: '⌗ hastag'
           }
         ]

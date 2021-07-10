@@ -1,1 +1,40 @@
 @use 'variables' as var;
+
+.tag-container {
+  //   border: 2px solid red;
+  background-color: transparent;
+  min-height: 24px;
+  //   max-height: fit-content;
+  font-size: var.$font-size-5;
+  padding: 0;
+  display: flex;
+  cursor: default;
+}
+
+.tag-wrapper {
+  //   border: 2px solid orchid;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, 80px);
+}
+
+.tag-list {
+  //   border: 2px solid red;
+  width: var.$fixed-width;
+  //   max-width: var.$max-width;
+  height: 100%;
+  border-radius: var.$radius;
+  display: flex;
+}
+
+.tag-block {
+  padding: 8px;
+  margin-right: 8px;
+  box-shadow: var.$light-shadow;
+  border-radius: var.$radius;
+  background-color: var.$primary-10;
+  width: fit-content !important;
+}

@@ -9,7 +9,8 @@ import {
   moveToDifferentGroup,
   updateLabel,
   addNewGroup,
-  deleteGroup
+  deleteGroup,
+  addTag
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -353,6 +354,7 @@ const GroupLists: React.FC<GroupList> = ({
           handleDragDrop={handleDragDrop}
           grpI={grpI}
           itemI={itemI}
+          color={group.label}
         />
       ))}
     </div>
@@ -380,6 +382,7 @@ type BlockProps = {
     e: React.DragEvent<HTMLElement>,
     _params: { grpI: number; itemI: number }
   ) => void
+  color: string
 }
 
 const Block: React.FC<BlockProps> = ({
@@ -391,7 +394,8 @@ const Block: React.FC<BlockProps> = ({
   itemI,
   handleDragEnd,
   handleDragEnter,
-  handleDragDrop
+  handleDragDrop,
+  color
 }) => {
   const { setState } = useContext(GroupContext)
 
@@ -453,6 +457,15 @@ const Block: React.FC<BlockProps> = ({
     })
   }
 
+  const updatetags = (tag: string) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = addTag(copyOfPrevState, grpI, itemI, tag)
+
+      return newState
+    })
+  }
+
   // Event handlers
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -507,6 +520,8 @@ const Block: React.FC<BlockProps> = ({
           {showModal && (
             <Modal callback={setShowModal}>
               <ModalContainer
+                update={updatetags}
+                color={color}
                 tags={item.tags}
                 elementLocation={elementLocation}
                 data={item}

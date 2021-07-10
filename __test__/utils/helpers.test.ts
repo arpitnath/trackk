@@ -1,6 +1,7 @@
 import { data } from '../../src/utils/defData'
 import {
   addNewGroup,
+  addTag,
   addToList,
   deleteGroup,
   deletetask,
@@ -405,6 +406,44 @@ describe('DELETE GROUP ', () => {
 
       expect(newData.length).to.be.eql(prevState.length - 1)
       expect(checkItemRemoved).to.be.eql(-1)
+    })
+  })
+})
+
+describe('ADD TAG ', () => {
+  let listOfTask: undefined | Data = undefined
+  before(() => {
+    listOfTask = JSON.parse(JSON.stringify(data))
+  })
+
+  describe('should add a tag to a given task list of a group ', () => {
+    let prevState: undefined | Data = undefined
+    let copyOfPrevState: undefined | Data = undefined
+    let newState: undefined | Data = undefined
+    let groupIndex: undefined | number = undefined
+    let taskIndex: undefined | number = undefined
+
+    before(() => {
+      prevState = listOfTask
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      groupIndex = 0
+      taskIndex = 0
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('should delete group from the list', () => {
+      const prevTags = prevState[groupIndex].tasks[taskIndex].tags
+
+      const payload = '🔐 Locked'
+
+      newState = addTag(copyOfPrevState, groupIndex, taskIndex, payload)
+      const newTags = newState[groupIndex].tasks[taskIndex].tags
+
+      expect(newTags.length).to.be.eql(prevTags.length + 1)
+      expect(newTags[newTags.length - 1].tag).to.be.eql(payload)
     })
   })
 })
