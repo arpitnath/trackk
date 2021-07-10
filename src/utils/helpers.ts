@@ -142,40 +142,48 @@ export const addTag = (
   payload: string
 ) => {
   const targetList = _list[groupIndex].tasks[taskIndex].tags
-  const newTag = {
-    id: uuid(),
-    tag: payload
-  }
 
-  targetList.push(newTag)
+  const flag = checkTagExits(targetList, payload)
+  if (flag) {
+    const newTag = {
+      id: uuid(),
+      tag: payload
+    }
+
+    targetList.push(newTag)
+  }
 
   return _list
 }
 
-export const addToSavetags = (_arr: Tag[], tag: string) => {
-  const newTag = {
-    id: uuid(),
-    tag: tag
+export const addToSavetags = (arr: Tag[], payload: string) => {
+  const flag = checkTagExits(arr, payload)
+
+  // console.log('flag: ', flag)
+
+  if (flag) {
+    const newTag: Tag = {
+      id: uuid(),
+      tag: payload
+    }
+
+    arr.push(newTag)
   }
-  const _hashMap = new Map()
-  _arr.forEach((tag, index) => _hashMap.set(index, tag.tag))
-  let flag = false
 
-  for (let i = 0; i < _hashMap.size; i++) {
-    const item = _hashMap.get(i)
+  return arr
+}
 
-    if (item !== newTag.tag) {
-      flag = true
-    } else {
+export const checkTagExits = (arr: Tag[], tag: string) => {
+  let flag = true
+
+  for (let i = 0; i < arr.length; i++) {
+    const tagInArr = arr[i].tag
+
+    if (tagInArr === tag) {
       flag = false
     }
   }
-
-  if (flag) {
-    _arr.push(newTag)
-  }
-
-  return _arr
+  return flag
 }
 
 export const debounce = (
