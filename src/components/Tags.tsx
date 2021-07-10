@@ -72,9 +72,7 @@ const Tags: React.FC<Props> & TagsComposition = ({ data, color, update }) => {
             )}
           </div>
         </div>
-        {/* <div style={{ display: `${suggest}` }}>
-          <Tags.SuggestiveTags />
-        </div> */}
+
         {addState && <Tags.SuggestiveTags state={state} />}
       </Tags.Wrapper>
     </TagContext.Provider>
@@ -91,9 +89,6 @@ const TagList: React.FC<{ tag: string; onclick?: () => void }> = ({
 }) => {
   return (
     <>
-      {/* something similar to group title | when clicked we can write and push it to the tag list */}
-      {/* Button to add a new tag */}
-      {/* Tag block */}
       <Tags.Tag onclick={onclick} data={tag} />
     </>
   )
@@ -162,7 +157,7 @@ const SavedTags: React.FC<{ state: Tag[] }> = ({ state }) => {
 
   return (
     <div className='saved-wrapper'>
-      <p>Select from your tags</p>
+      <p>Your recent tags</p>
       <div className='savedtags-container'>
         {state.map((tag: Tag) => (
           <Tags.List

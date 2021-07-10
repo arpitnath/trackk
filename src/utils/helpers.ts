@@ -159,14 +159,15 @@ export const addTag = (
 export const addToSavetags = (arr: Tag[], payload: string) => {
   const flag = checkTagExits(arr, payload)
 
-  // console.log('flag: ', flag)
-
   if (flag) {
     const newTag: Tag = {
       id: uuid(),
       tag: payload
     }
 
+    if (arr.length >= 6) {
+      arr.shift()
+    }
     arr.push(newTag)
   }
 
