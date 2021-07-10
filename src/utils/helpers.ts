@@ -150,6 +150,10 @@ export const addTag = (
       tag: payload
     }
 
+    if (targetList.length >= 5) {
+      targetList.shift()
+    }
+
     targetList.push(newTag)
   }
 
@@ -165,7 +169,7 @@ export const addToSavetags = (arr: Tag[], payload: string) => {
       tag: payload
     }
 
-    if (arr.length >= 6) {
+    if (arr.length >= 5) {
       arr.shift()
     }
     arr.push(newTag)
