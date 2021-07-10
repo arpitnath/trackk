@@ -10,7 +10,8 @@ import {
   updateLabel,
   addNewGroup,
   deleteGroup,
-  addTag
+  addTag,
+  deleteTag
 } from '../utils/helpers'
 import { ChangeTarget, Data, Group, Task } from '../utils/types'
 import { Button, Modal as ModalContainer, Title } from '../containers'
@@ -462,6 +463,15 @@ const Block: React.FC<BlockProps> = ({
     })
   }
 
+  const removeTags = (id: string) => {
+    setState((prevState: Data) => {
+      const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      const newState = deleteTag(copyOfPrevState, grpI, itemI, id)
+
+      return newState
+    })
+  }
+
   // Event handlers
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -516,6 +526,7 @@ const Block: React.FC<BlockProps> = ({
           {showModal && (
             <Modal callback={setShowModal}>
               <ModalContainer
+                removeTags={removeTags}
                 update={updatetags}
                 color={color}
                 tags={item.tags}
