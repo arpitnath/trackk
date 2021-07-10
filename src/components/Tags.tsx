@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import ReactTooltip from 'react-tooltip'
 import { Button } from '../containers'
 import { useLocalStorgeState } from '../hooks/localStorageState'
 import { addToSavetags } from '../utils/helpers'
@@ -105,13 +106,21 @@ const TagBlock: React.FC<{ data: string; onclick?: () => void }> = ({
     }
   })
   return (
-    <span
-      role='none'
-      onClick={onclick}
-      style={bg.tagcolor}
-      className='tag-block'>
-      {data}
-    </span>
+    <>
+      <span
+        data-tip
+        data-for='tagtooltip'
+        onDoubleClick={() => console.log('delete')}
+        role='none'
+        onClick={onclick}
+        style={bg.tagcolor}
+        className='tag-block'>
+        {data}
+      </span>
+      <ReactTooltip id='tagtooltip' place='bottom' effect='solid'>
+        Double click to remove a tag
+      </ReactTooltip>
+    </>
   )
 }
 
@@ -137,7 +146,11 @@ const AddTag: React.FC<{ updateTag: (arg: string) => void }> = ({
 
   return (
     <div className='add-container'>
-      <input value={state} onChange={handleChange} />
+      <input
+        onClick={() => setState('')}
+        value={state}
+        onChange={handleChange}
+      />
       <div style={bg.color} className='tag-btn'>
         <Button
           ClassName='check-btn tag-check-btn '
