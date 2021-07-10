@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeTarget, Data, Group } from './types'
+import { ChangeTarget, Data, Group, Tag } from './types'
 import { v4 as uuid } from 'uuid'
 
 export const moveToDifferentGroup = (
@@ -150,6 +150,32 @@ export const addTag = (
   targetList.push(newTag)
 
   return _list
+}
+
+export const addToSavetags = (_arr: Tag[], tag: string) => {
+  const newTag = {
+    id: uuid(),
+    tag: tag
+  }
+  const _hashMap = new Map()
+  _arr.forEach((tag, index) => _hashMap.set(index, tag.tag))
+  let flag = false
+
+  for (let i = 0; i < _hashMap.size; i++) {
+    const item = _hashMap.get(i)
+
+    if (item !== newTag.tag) {
+      flag = true
+    } else {
+      flag = false
+    }
+  }
+
+  if (flag) {
+    _arr.push(newTag)
+  }
+
+  return _arr
 }
 
 export const debounce = (

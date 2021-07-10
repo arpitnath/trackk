@@ -1,13 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button } from '../containers'
+import { useLocalStorgeState } from '../hooks/localStorageState'
+import { addToSavetags } from '../utils/helpers'
+import { savedTags } from '../utils/labels'
 import { Tag } from '../utils/types'
 
 interface TagsComposition {
   Container: React.FC
-  List: React.FC<{ tag: string }>
-  Tag: React.FC<{ data: string }>
+  List: React.FC<{ tag: string; onclick?: () => void }>
+  Tag: React.FC<{ data: string; onclick?: () => void }>
   Title: React.FC<{ title: string }>
   Addtag: React.FC<{ updateTag: (arg: string) => void }>
+  SuggestiveTags: React.FC<{ state: Tag[] }>
+  Wrapper: React.FC
 }
 
 type Props = {
@@ -20,45 +25,58 @@ type Props = {
 const TagContext: React.Context<any> = React.createContext(null)
 
 const Tags: React.FC<Props> & TagsComposition = ({ data, color, update }) => {
+  const [state, setState] = useLocalStorgeState('tags', savedTags)
   const [tagState, setTagState] = useState(data)
   const [addState, setAddState] = useState(false)
-
-  const tagContext = {
-    tagColor: color,
-    state: tagState
-  }
 
   const updateTag = (tag: string) => {
     setAddState(false)
 
     if (tag !== 'Add a new tag' && tag !== '') {
       update(tag)
+      setState((prev: Tag[]) => {
+        const copyOfPrevState = JSON.parse(JSON.stringify(prev))
+
+        const newState = addToSavetags(copyOfPrevState, tag)
+        return newState
+      })
     }
   }
+  const tagContext = {
+    tagColor: color,
+    state: tagState,
+    updateTag: updateTag
+  }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTagState(data)
   }, [data])
 
   return (
     <TagContext.Provider value={tagContext}>
-      <div className='tag-wrapper'>
-        <Tags.Title title='Type' />
-        <div className='tag-list'>
-          {tagState.map((data) => (
-            <Tags.List key={data.id} tag={data.tag} />
-          ))}
-          {!addState ? (
-            <Button
-              ClassName=''
-              onclickFunction={() => setAddState(true)}
-              icon={'carbon:add'}
-            />
-          ) : (
-            <Tags.Addtag updateTag={updateTag} />
-          )}
+      <Tags.Wrapper>
+        <div className='tag-wrapper'>
+          <Tags.Title title='Type' />
+          <div className='tag-list'>
+            {tagState.map((data) => (
+              <Tags.List key={data.id} tag={data.tag} />
+            ))}
+            {!addState ? (
+              <Button
+                ClassName=''
+                onclickFunction={() => setAddState(true)}
+                icon={'carbon:add'}
+              />
+            ) : (
+              <Tags.Addtag updateTag={updateTag} />
+            )}
+          </div>
         </div>
-      </div>
+        {/* <div style={{ display: `${suggest}` }}>
+          <Tags.SuggestiveTags />
+        </div> */}
+        {addState && <Tags.SuggestiveTags state={state} />}
+      </Tags.Wrapper>
     </TagContext.Provider>
   )
 }
@@ -67,18 +85,24 @@ const TagContainer: React.FC = ({ children }) => {
   return <div className='tag-container'>{children}</div>
 }
 
-const TagList: React.FC<{ tag: string }> = ({ tag }) => {
+const TagList: React.FC<{ tag: string; onclick?: () => void }> = ({
+  tag,
+  onclick
+}) => {
   return (
     <>
       {/* something similar to group title | when clicked we can write and push it to the tag list */}
       {/* Button to add a new tag */}
       {/* Tag block */}
-      <Tags.Tag data={tag} />
+      <Tags.Tag onclick={onclick} data={tag} />
     </>
   )
 }
 
-const TagBlock: React.FC<{ data: string }> = ({ data }) => {
+const TagBlock: React.FC<{ data: string; onclick?: () => void }> = ({
+  data,
+  onclick
+}) => {
   const { tagColor } = useContext(TagContext)
   const [bg] = useState({
     tagcolor: {
@@ -86,7 +110,11 @@ const TagBlock: React.FC<{ data: string }> = ({ data }) => {
     }
   })
   return (
-    <span style={bg.tagcolor} className='tag-block'>
+    <span
+      role='none'
+      onClick={onclick}
+      style={bg.tagcolor}
+      className='tag-block'>
       {data}
     </span>
   )
@@ -126,10 +154,38 @@ const AddTag: React.FC<{ updateTag: (arg: string) => void }> = ({
   )
 }
 
+const SavedTags: React.FC<{ state: Tag[] }> = ({ state }) => {
+  const { updateTag } = useContext(TagContext)
+  const handleClick = (arg: Tag) => {
+    updateTag(arg.tag)
+  }
+
+  return (
+    <div className='saved-wrapper'>
+      <p>Select from your tags</p>
+      <div className='savedtags-container'>
+        {state.map((tag: Tag) => (
+          <Tags.List
+            onclick={() => handleClick(tag)}
+            key={tag.id}
+            tag={tag.tag}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const Wrapper: React.FC = ({ children }) => {
+  return <div className='main-wrapper'>{children}</div>
+}
+
 Tags.Container = TagContainer
 Tags.List = TagList
 Tags.Tag = TagBlock
 Tags.Title = TagTitle
 Tags.Addtag = AddTag
+Tags.SuggestiveTags = SavedTags
+Tags.Wrapper = Wrapper
 
 export default Tags

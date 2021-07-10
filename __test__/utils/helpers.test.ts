@@ -1,8 +1,10 @@
 import { data } from '../../src/utils/defData'
+import { savedTags } from '../../src/utils/labels'
 import {
   addNewGroup,
   addTag,
   addToList,
+  addToSavetags,
   deleteGroup,
   deletetask,
   editGroupTitle,
@@ -12,7 +14,7 @@ import {
   updateLabel
 } from '../../src/utils/helpers'
 import { expect } from 'chai'
-import { ChangeTarget, Data, Group, Task } from '../../src/utils/types'
+import { ChangeTarget, Data, Group, Tag, Task } from '../../src/utils/types'
 
 describe('MOVE TASK TO A DIFFERENT GROUP', () => {
   let listOfTask: undefined | Data = undefined
@@ -444,6 +446,48 @@ describe('ADD TAG ', () => {
 
       expect(newTags.length).to.be.eql(prevTags.length + 1)
       expect(newTags[newTags.length - 1].tag).to.be.eql(payload)
+    })
+  })
+})
+
+describe('ADD TAGS', () => {
+  let listOfTags: undefined | Tag[] = undefined
+  before(() => {
+    listOfTags = JSON.parse(JSON.stringify(savedTags))
+  })
+
+  describe('should add a tag to the tag-list', () => {
+    let prevState: undefined | Tag[] = undefined
+    let copyOfPrevState: undefined | Tag[] = undefined
+    let newState: undefined | Tag[] = undefined
+    let payload: undefined | string = undefined
+
+    beforeEach(() => {
+      prevState = listOfTags
+      copyOfPrevState = JSON.parse(JSON.stringify(prevState))
+      payload = '🔐 Locked'
+      newState = addToSavetags(copyOfPrevState, payload)
+    })
+
+    after(() => {
+      prevState = undefined
+    })
+
+    it('should add tag to the list', () => {
+      const newTags = newState[newState.length - 1]
+
+      expect(newState.length).to.be.eql(prevState.length + 1)
+      expect(newTags.tag).to.be.eql(payload)
+    })
+    it('should not add tag to the list if it exists', () => {
+      const newPayload = '🔐 Locked'
+
+      const _newState = addToSavetags(copyOfPrevState, newPayload)
+
+      expect(newState.length).to.be.eql(_newState.length)
+      expect(newState[newState.length - 1].tag).to.be.eql(
+        _newState[newState.length - 1].tag
+      )
     })
   })
 })

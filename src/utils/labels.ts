@@ -67,3 +67,18 @@ export const tags: Tag[] = [
     tag: '🔥 urgent'
   }
 ]
+
+export const savedTags: Tag[] = [
+  {
+    id: 'demotag_0',
+    tag: '⌗ hastag'
+  },
+  {
+    id: 'demotag_1',
+    tag: '🐞 Bugs'
+  },
+  {
+    id: 'demotag_2',
+    tag: '🔥 urgent'
+  }
+]

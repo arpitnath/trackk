@@ -427,12 +427,8 @@ const Block: React.FC<BlockProps> = ({
   const handleUpdateTask = (modalFlag: boolean) => {
     setTaskState(false)
 
-    console.log(`%c --MODAL FLAG-- => ${modalFlag}`, 'color: #fffb00')
     const { groupIndex, itemIndex } = elementLocation
 
-    console.log(`%c --TASK-STATE-- => ${taskState}`, 'color: red')
-    console.log(`%c --groupIndex-- => ${groupIndex}`, 'color: #ff9292')
-    console.log(`%c --itemIndex-- => ${itemIndex}`, 'color: #92ddff')
     setState((prevState: Data) => {
       const _target = !modalFlag ? ChangeTarget.HEADING : ChangeTarget.BODY
       const copyOfPrevState = JSON.parse(JSON.stringify(prevState))
