@@ -53,14 +53,6 @@ export const useLocalStorgeState = (
         })
       })
     }
-    // else {
-    //   setState((prevState: Tag[]) => {
-    //     const copyPrev = JSON.parse(JSON.stringify(prevState))
-    //     const newState = copyPrev
-
-    //     return newState
-    //   })
-    // }
 
     prevKeyRef.current = key
     window.localStorage.setItem(key, serialize(state))
