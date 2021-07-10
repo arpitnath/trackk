@@ -9,22 +9,46 @@ export const data: Data = [
       {
         id: 'demo#1',
         heading: 'first',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       },
       {
         id: 'demo#2',
         heading: 'second',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       },
       {
         id: 'demo#3',
         heading: 'third',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       },
       {
         id: 'demo#4',
         heading: 'fourth',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       }
     ]
   },
@@ -36,17 +60,35 @@ export const data: Data = [
       {
         id: 'demo_g2#1',
         heading: 'first',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       },
       {
         id: 'demo_g2#2',
         heading: 'second',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       },
       {
         id: 'demo_g2#3',
         heading: 'thired',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       }
     ]
   },
@@ -58,7 +100,13 @@ export const data: Data = [
       {
         id: 'demo_g3#1',
         heading: 'first',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       }
     ]
   },
@@ -70,7 +118,13 @@ export const data: Data = [
       {
         id: 'demo_g4#1',
         heading: 'first',
-        content: 'demo content'
+        content: 'demo content',
+        tags: [
+          {
+            id: 'demotag',
+            tag: '⌗ hastag'
+          }
+        ]
       }
     ]
   }

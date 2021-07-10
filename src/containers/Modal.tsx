@@ -1,15 +1,18 @@
 import React, { useContext } from 'react'
 import { Modal } from '../components'
 import { GroupContext, Location } from '../components/Groups'
-import { Task } from '../utils/types'
+import { Task, Tag } from '../utils/types'
 
 type Props = {
   data: Task
+  tags: Tag[]
   elementLocation: Location
 }
 
-const ModalContainer: React.FC<Props> = ({ data, elementLocation }) => {
+const ModalContainer: React.FC<Props> = ({ data, elementLocation, tags }) => {
   const { setState } = useContext(GroupContext)
+  console.log('tags: ', tags)
+
   return (
     <Modal.Container>
       <Modal.Header>
@@ -18,7 +21,10 @@ const ModalContainer: React.FC<Props> = ({ data, elementLocation }) => {
           location={elementLocation}
           updateTitle={setState}
           title={data.heading}>
-          <Modal.HeaderOptions />
+          <Modal.HeaderOptions>
+            {/* Tags will go */}
+            <span>new options</span>
+          </Modal.HeaderOptions>
         </Modal.HeaderBody>
       </Modal.Header>
       <Modal.Content>

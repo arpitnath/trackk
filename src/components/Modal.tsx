@@ -124,20 +124,16 @@ const ModalHeaderBody: React.FC<{
   )
 }
 //act as each property
-const ModalHeaderOptions: React.FC = () => {
-  return (
-    <div className='modal-section-container'>
-      <div className='modal-section-wrapper'>
-        <div className='options-property'></div>
-        <div className='options-property options-params'></div>
-      </div>
-    </div>
-  )
+const ModalHeaderOptions: React.FC = ({ children }) => {
+  return <div className='modal-headopt-container'>{children}</div>
 }
 const ModalContent: React.FC = ({ children }) => {
   return <div className='content-section modal-section-wrapper'>{children}</div>
 }
 
+/**
+ * @Note : if not used delete placeholder
+ */
 const ModalPlaceholder: React.FC = () => {
   return <div className='modal-body-placeholder'></div>
 }

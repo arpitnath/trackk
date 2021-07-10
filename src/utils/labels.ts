@@ -1,3 +1,5 @@
+import { Tag } from './types'
+
 export type Color = {
   id: string
   color: string
@@ -48,5 +50,20 @@ export const lableColors: Color[] = [
     style: {
       backgroundColor: 'hsl(25, 80%, 77%)'
     }
+  }
+]
+
+export const tags: Tag[] = [
+  {
+    id: 'tag_01_#bug',
+    tag: '🐞 Bugs'
+  },
+  {
+    id: 'tag_02_#task',
+    tag: '🛠 Task'
+  },
+  {
+    id: 'tag_03_#urgent',
+    tag: '🔥 urgent'
   }
 ]

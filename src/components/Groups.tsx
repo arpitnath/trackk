@@ -397,7 +397,7 @@ const Block: React.FC<BlockProps> = ({
 
   const [newTask, setNewTask] = useState(item.heading)
 
-  const [taskState, setTaskState] = useState<boolean>(false)
+  const [taskState, setTaskState] = useState<boolean>(false) //if true we can edit the task title in the board
 
   const [elementLocation, setElementLocation] = useState<Location>({
     groupIndex: grpI,
@@ -506,7 +506,11 @@ const Block: React.FC<BlockProps> = ({
 
           {showModal && (
             <Modal callback={setShowModal}>
-              <ModalContainer elementLocation={elementLocation} data={item} />
+              <ModalContainer
+                tags={item.tags}
+                elementLocation={elementLocation}
+                data={item}
+              />
             </Modal>
           )}
           <div className='btn-container'>
