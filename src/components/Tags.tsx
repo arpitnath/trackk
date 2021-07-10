@@ -100,6 +100,12 @@ const AddTag: React.FC<{ updateTag: (arg: string) => void }> = ({
   updateTag
 }) => {
   const [state, setState] = useState('Add a new tag')
+  const { tagColor } = useContext(TagContext)
+  const [bg] = useState({
+    color: {
+      backgroundColor: tagColor
+    }
+  })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
@@ -109,11 +115,13 @@ const AddTag: React.FC<{ updateTag: (arg: string) => void }> = ({
   return (
     <div className='add-container'>
       <input value={state} onChange={handleChange} />
-      <Button
-        ClassName='check-btn'
-        onclickFunction={() => updateTag(state)}
-        icon={'ant-design:check-outlined'}
-      />
+      <div style={bg.color} className='tag-btn'>
+        <Button
+          ClassName='check-btn tag-check-btn '
+          onclickFunction={() => updateTag(state)}
+          icon={'carbon:settings-check'}
+        />
+      </div>
     </div>
   )
 }

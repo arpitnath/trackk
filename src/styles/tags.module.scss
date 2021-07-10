@@ -24,7 +24,7 @@
 .tag-list {
   //   border: 2px solid red;
   width: var.$fixed-width;
-  //   max-width: var.$max-width;
+  max-width: var.$max-width;
   height: 100%;
   border-radius: var.$radius;
   display: flex;
@@ -37,4 +37,28 @@
   border-radius: var.$radius;
   background-color: var.$primary-10;
   width: fit-content !important;
+}
+
+.add-container {
+  width: auto;
+  display: flex;
+
+  input {
+    font-size: var.$font-size-5;
+    padding: 0.5rem;
+  }
+
+  .tag-btn {
+    border-radius: 50%;
+    @include dimensions(34px, 34px);
+
+    &:hover {
+      background-color: var.$primary-9 !important;
+    }
+
+    .tag-check-btn {
+      margin-left: 0px;
+      margin-top: 6px;
+    }
+  }
 }
