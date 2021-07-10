@@ -71,9 +71,10 @@
   border-radius: var.$radius;
   filter: contrast(80%);
   display: flex;
-  width: 600px;
+  width: 550px;
   height: auto;
   padding: 25px;
+  padding-left: 35px;
   box-shadow: var.$dark-shadow;
   margin-left: 6rem;
   margin-top: -1rem;
