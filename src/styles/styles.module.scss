@@ -465,10 +465,21 @@ Modal Styles
   border: 2px solid green;
   width: 100%;
   height: 450px;
+
+  // .content-section {
+  // }
 }
 
-// .content-section {
-// }
+.close-modal-min {
+  display: none;
+  padding: 3px;
+  @media (max-width: 600px) {
+    color: var.$grey-7;
+    display: block;
+    margin-top: 0px;
+    margin-left: -2rem;
+  }
+}
 
 .modal-textarea {
   height: 100%;

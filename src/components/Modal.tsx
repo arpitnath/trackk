@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { Button } from '../containers'
 import { debounce, editList } from '../utils/helpers'
 import { ChangeTarget, Data } from '../utils/types'
 import { Location } from './Groups'
@@ -6,7 +7,7 @@ import { Location } from './Groups'
 interface ModalComposition {
   Container: React.FC
   Header: React.FC
-  Options: React.FC
+  Options: React.FC<{ close: (arg: boolean) => void }>
   HeaderBody: React.FC<{
     title: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,10 +60,18 @@ const ModalHeader: React.FC = ({ children }) => {
   return <div className='header-section modal-section-wrapper'>{children}</div>
 }
 
-const ModalOptions: React.FC = () => {
+const ModalOptions: React.FC<{ close: (arg: boolean) => void }> = ({
+  close
+}) => {
   return (
     <div className='modal-option'>
       {/* top navbar with optional features */}
+
+      <Button
+        ClassName='close-modal-min '
+        onclickFunction={() => close(false)}
+        icon={'el:eye-close'}
+      />
     </div>
   )
 }
