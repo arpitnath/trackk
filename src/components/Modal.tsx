@@ -15,7 +15,6 @@ interface ModalComposition {
   }>
   HeaderOptions: React.FC
   Content: React.FC
-  Placeholder: React.FC
   TextArea: React.FC<{
     location: Location
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -131,13 +130,6 @@ const ModalContent: React.FC = ({ children }) => {
   return <div className='content-section modal-section-wrapper'>{children}</div>
 }
 
-/**
- * @Note : if not used delete placeholder
- */
-const ModalPlaceholder: React.FC = () => {
-  return <div className='modal-body-placeholder'></div>
-}
-
 const ModalTextArea: React.FC<{
   content: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -185,7 +177,6 @@ Modal.Options = ModalOptions
 Modal.HeaderBody = ModalHeaderBody
 Modal.HeaderOptions = ModalHeaderOptions
 Modal.Content = ModalContent
-Modal.Placeholder = ModalPlaceholder
 Modal.TextArea = ModalTextArea
 
 export default Modal

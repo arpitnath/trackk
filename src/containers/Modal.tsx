@@ -43,7 +43,6 @@ const ModalContainer: React.FC<Props> = ({
         </Modal.HeaderBody>
       </Modal.Header>
       <Modal.Content>
-        <Modal.Placeholder />
         <Modal.TextArea
           location={elementLocation}
           updateContent={setState}
