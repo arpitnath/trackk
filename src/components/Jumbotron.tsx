@@ -5,7 +5,7 @@ import { debounce } from '../utils/helpers'
 interface JumbotronComposition {
   Container: React.FC
   Pane: React.FC
-  Title: React.FC<{ title: string }>
+  Title: React.FC
   Content: React.FC
 }
 
@@ -25,8 +25,34 @@ const JumboPane: React.FC = ({ children }) => {
   return <div className='jumbo-pane'>{children}</div>
 }
 
-const JumboTitle: React.FC<{ title: string }> = ({ title }) => {
-  return <h1>{title}</h1>
+const JumboTitle: React.FC = () => {
+  const defaultTitle = 'Trackk-Board'
+  const [state, setState] = useLocalStorgeState('jumbo-title', defaultTitle)
+
+  const [title, setTitle] = useState(state)
+
+  const handleChange = (event: any) => {
+    debouncedUpdaterCall(event.target.value)
+    // setState(event.target.value)
+    setTitle(event.target.value)
+  }
+
+  const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
+
+    setState(value)
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
+
+  return (
+    <div aria-hidden={true} className='jumbo-title'>
+      <input value={title} onChange={(e) => handleChange(e)} />
+    </div>
+  )
 }
 
 const JumboContent: React.FC = () => {

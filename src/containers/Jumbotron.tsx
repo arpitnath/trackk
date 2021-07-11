@@ -6,7 +6,7 @@ const JumbotronContainer: React.FC = () => {
     <Jumbotron.Container>
       <Jumbotron>
         <Jumbotron.Pane>
-          <Jumbotron.Title title={'Trackk-Board'} />
+          <Jumbotron.Title />
           <Jumbotron.Content />
         </Jumbotron.Pane>
       </Jumbotron>
