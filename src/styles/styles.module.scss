@@ -397,6 +397,10 @@ Modal Styles
   @media screen and (min-width: 1800px) {
     margin-top: -70vh;
   }
+
+  @media (max-width: 600px) {
+    margin-top: 2.5rem;
+  }
 }
 
 .modal-container {
@@ -408,6 +412,11 @@ Modal Styles
 
   @media screen and (min-width: 1800px) {
     @include dimensions(1200px, 944px);
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    max-height: 100vh;
   }
 }
 
