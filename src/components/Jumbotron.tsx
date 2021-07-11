@@ -31,6 +31,7 @@ const JumboTitle: React.FC = () => {
 
   const [title, setTitle] = useState(state)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     debouncedUpdaterCall(event.target.value)
     // setState(event.target.value)
@@ -66,6 +67,7 @@ const JumboContent: React.FC = () => {
 
   const [content, setContent] = useState(state)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChangeContent = (event: any) => {
     debouncedUpdaterCall(event.target.value)
     // setState(event.target.value)
