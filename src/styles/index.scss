@@ -104,3 +104,26 @@ p {
 .stop-scroll {
   overflow: hidden !important;
 }
+
+.loader {
+  border: 12px solid var.$grey-8;
+  border-top: 12px solid var.$primary-7;
+  border-radius: 50%;
+  margin-top: 40vh;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-50%, 50%) !important;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
