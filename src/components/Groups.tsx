@@ -526,6 +526,7 @@ const Block: React.FC<BlockProps> = ({
           {showModal && (
             <Modal callback={setShowModal}>
               <ModalContainer
+                closeModal={setShowModal}
                 removeTags={removeTags}
                 update={updatetags}
                 color={color}

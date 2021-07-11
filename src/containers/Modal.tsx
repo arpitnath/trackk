@@ -11,6 +11,7 @@ type Props = {
   color: string
   update: (tag: string) => void
   removeTags: (arg: string) => void
+  closeModal: (arg: boolean) => void
 }
 
 const ModalContainer: React.FC<Props> = ({
@@ -19,14 +20,15 @@ const ModalContainer: React.FC<Props> = ({
   tags,
   color,
   update,
-  removeTags
+  removeTags,
+  closeModal
 }) => {
   const { setState } = useContext(GroupContext)
 
   return (
     <Modal.Container>
       <Modal.Header>
-        <Modal.Options />
+        <Modal.Options close={closeModal} />
         <Modal.HeaderBody
           location={elementLocation}
           updateTitle={setState}

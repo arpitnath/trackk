@@ -37,12 +37,26 @@ Jumbotron Styles
 .jumbo-wrapper {
   width: 50%;
 
-  h1 {
+  .jumbo-title input {
     font-size: var.$font-size-0;
+    font-weight: var.$font-weigth-3;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
     line-height: 1.1;
     margin-bottom: var.$d0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: text;
     @media (max-width: 600px) {
+      width: 150%;
+      height: fit-content;
       font-size: var.$font-size-1;
+      margin-top: -2rem;
+      margin-left: -3rem;
+      text-align: left;
     }
   }
 
@@ -54,17 +68,26 @@ Jumbotron Styles
 }
 
 .jumbo-content {
-  p {
-    font-weight: normal;
-    line-height: 1;
-    font-size: var.$font-size-2;
-    @media (max-width: 600px) {
-      font-size: var.$font-size-4;
-      line-height: 1.2;
-    }
-  }
+  height: 250px;
+
   @media (max-width: 600px) {
-    margin-top: var.$d1;
+    width: 160%;
+    margin-left: -3rem;
+  }
+}
+
+.jumbo-textarea {
+  height: 100%;
+  position: relative;
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: text;
+    font-size: var.$font-size-5;
   }
 }
 
@@ -81,6 +104,10 @@ Groups Styles
   font-size: 24px;
   color: red;
   padding: 0 5rem;
+
+  @media (max-width: 600px) {
+    margin-top: -8rem;
+  }
 }
 
 .group-wrapper {
@@ -397,6 +424,10 @@ Modal Styles
   @media screen and (min-width: 1800px) {
     margin-top: -70vh;
   }
+
+  @media (max-width: 600px) {
+    margin-top: 2.5rem;
+  }
 }
 
 .modal-container {
@@ -408,6 +439,11 @@ Modal Styles
 
   @media screen and (min-width: 1800px) {
     @include dimensions(1200px, 944px);
+  }
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    max-height: 100vh;
   }
 }
 
@@ -456,10 +492,21 @@ Modal Styles
   border: 2px solid green;
   width: 100%;
   height: 450px;
+
+  // .content-section {
+  // }
 }
 
-// .content-section {
-// }
+.close-modal-min {
+  display: none;
+  padding: 3px;
+  @media (max-width: 600px) {
+    color: var.$grey-7;
+    display: block;
+    margin-top: 0px;
+    margin-left: -2rem;
+  }
+}
 
 .modal-textarea {
   height: 100%;

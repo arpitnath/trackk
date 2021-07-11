@@ -3,7 +3,7 @@ import { Data, Group, Tag } from '../utils/types'
 
 export const useLocalStorgeState = (
   key: string,
-  defaultValue: Data | (() => Data) | Tag[],
+  defaultValue: Data | (() => Data) | Tag[] | string,
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
   const [state, setState] = React.useState(() => {

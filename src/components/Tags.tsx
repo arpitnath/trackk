@@ -12,12 +12,14 @@ interface TagsComposition {
     tag: Tag
     onclick?: (arg?: string) => void
     tooltip: boolean
+    display: boolean
   }>
   Tag: React.FC<{
     data: string
     onclick?: (arg?: string) => void
     id: string
     tooltip: boolean
+    display: boolean
   }>
   Title: React.FC<{ title: string }>
   Addtag: React.FC<{ updateTag: (arg: string) => void }>
@@ -76,7 +78,12 @@ const Tags: React.FC<Props> & TagsComposition = ({
           <Tags.Title title='Type' />
           <div className='tag-list'>
             {tagState.map((data) => (
-              <Tags.List tooltip={false} key={data.id} tag={data} />
+              <Tags.List
+                display={addState}
+                tooltip={false}
+                key={data.id}
+                tag={data}
+              />
             ))}
             {!addState ? (
               <Button
@@ -100,32 +107,39 @@ const TagContainer: React.FC = ({ children }) => {
   return <div className='tag-container'>{children}</div>
 }
 
-const TagList: React.FC<{ tag: Tag; onclick?: () => void; tooltip: boolean }> =
-  ({ tag, onclick, tooltip }) => {
-    return (
-      <>
-        <Tags.Tag
-          tooltip={tooltip}
-          onclick={onclick}
-          data={tag.tag}
-          id={tag.id}
-        />
-      </>
-    )
-  }
+const TagList: React.FC<{
+  tag: Tag
+  onclick?: () => void
+  tooltip: boolean
+  display: boolean
+}> = ({ tag, onclick, tooltip, display }) => {
+  return (
+    <>
+      <Tags.Tag
+        display={display}
+        tooltip={tooltip}
+        onclick={onclick}
+        data={tag.tag}
+        id={tag.id}
+      />
+    </>
+  )
+}
 
 const TagBlock: React.FC<{
   data: string
   onclick?: () => void
   id: string
   tooltip: boolean
-}> = ({ data, onclick, id, tooltip }) => {
+  display: boolean
+}> = ({ data, onclick, id, tooltip, display }) => {
   const { tagColor, removeTag } = useContext(TagContext)
   const [bg] = useState({
     tagcolor: {
       backgroundColor: tagColor
     }
   })
+
   return (
     <>
       <span
@@ -135,7 +149,7 @@ const TagBlock: React.FC<{
         role='none'
         onClick={onclick}
         style={bg.tagcolor}
-        className='tag-block'>
+        className={display ? 'tag-block blocks' : 'tag-block'}>
         {data}
       </span>
       <ReactTooltip
@@ -199,6 +213,7 @@ const SavedTags: React.FC<{ state: Tag[] }> = ({ state }) => {
       <div className='savedtags-container'>
         {state.map((tag: Tag) => (
           <Tags.List
+            display={false}
             tooltip={true}
             onclick={() => handleClick(tag)}
             key={tag.id}

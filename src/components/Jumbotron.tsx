@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useLocalStorgeState } from '../hooks/localStorageState'
+import { debounce } from '../utils/helpers'
 
 interface JumbotronComposition {
   Container: React.FC
   Pane: React.FC
-  Title: React.FC<{ title: string }>
+  Title: React.FC
   Content: React.FC
 }
 
@@ -23,12 +25,73 @@ const JumboPane: React.FC = ({ children }) => {
   return <div className='jumbo-pane'>{children}</div>
 }
 
-const JumboTitle: React.FC<{ title: string }> = ({ title }) => {
-  return <h1>{title}</h1>
+const JumboTitle: React.FC = () => {
+  const defaultTitle = 'Trackk-Board'
+  const [state, setState] = useLocalStorgeState('jumbo-title', defaultTitle)
+
+  const [title, setTitle] = useState(state)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: any) => {
+    debouncedUpdaterCall(event.target.value)
+
+    setTitle(event.target.value)
+  }
+
+  const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
+
+    setState(value)
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
+
+  return (
+    <div aria-hidden={true} className='jumbo-title'>
+      <input value={title} onChange={(e) => handleChange(e)} />
+    </div>
+  )
 }
 
-const JumboContent: React.FC = ({ children }) => {
-  return <div className='jumbo-content'>{children}</div>
+const JumboContent: React.FC = () => {
+  const defaultContent = `⛰ Epics are large overarching initiatives.
+🏃‍♂️ Sprints are time-bounded pushes to complete a set of tasks.
+🔨 Tasks are the actions that make up epics.
+🐞 Bugs are tasks to fix things.
+  `
+
+  const [state, setState] = useLocalStorgeState('jumbo-content', defaultContent)
+
+  const [content, setContent] = useState(state)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChangeContent = (event: any) => {
+    debouncedUpdaterCall(event.target.value)
+
+    setContent(event.target.value)
+  }
+
+  const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
+
+    setState(value)
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
+
+  return (
+    <div className='jumbo-content'>
+      <div className='jumbo-textarea'>
+        <textarea onChange={(e) => handleChangeContent(e)} value={content} />{' '}
+      </div>
+    </div>
+  )
 }
 
 Jumbotron.Container = JumboContainer
