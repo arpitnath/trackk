@@ -2,138 +2,33 @@ import { Data } from './types'
 
 export const data: Data = [
   {
-    id: 'group_id#1',
-    title: 'group 1',
-    label: 'hsl(205, 59%, 80%)',
+    id: 'EC8C9664F4CFB41C4B7ECD3B6C96E3A9',
+    title: 'Not Started',
+    label: 'hsl(345, 69%, 90%)',
     tasks: [
       {
-        id: 'demo#1',
-        heading: 'first',
-        content: 'demo content',
+        id: 'E368B9938746FA090D6AFD3628355133',
+        heading: 'Untitled',
+        content: 'Untitled',
         tags: [
           {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          },
-          {
-            id: 'demotag_1',
-            tag: '🐞 Bugs'
-          },
-          {
-            id: 'demotag_2',
-            tag: '🔥 urgent'
-          }
-        ]
-      },
-      {
-        id: 'demo#2',
-        heading: 'second',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      },
-      {
-        id: 'demo#3',
-        heading: 'third',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      },
-      {
-        id: 'demo#4',
-        heading: 'fourth',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
+            id: 'D57AC45256849D9B13E2422D91580FB9',
+            tag: '⌗ hash'
           }
         ]
       }
     ]
   },
   {
-    id: 'group_id#2',
-    title: 'group 2',
-    label: 'hsl(205, 59%, 80%)',
-    tasks: [
-      {
-        id: 'demo_g2#1',
-        heading: 'first',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      },
-      {
-        id: 'demo_g2#2',
-        heading: 'second',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      },
-      {
-        id: 'demo_g2#3',
-        heading: 'thired',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      }
-    ]
+    id: '1D5BD3EB2CCA3D29F8C7D75FA097A1CC',
+    title: 'In Progress',
+    label: 'hsl(25, 80%, 77%)',
+    tasks: []
   },
   {
-    id: 'group_id#3',
-    title: 'group 3',
-    label: 'hsl(205, 59%, 80%)',
-    tasks: [
-      {
-        id: 'demo_g3#1',
-        heading: 'first',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'group_id#4',
-    title: 'group 4',
-    label: 'hsl(205, 59%, 80%)',
-    tasks: [
-      {
-        id: 'demo_g4#1',
-        heading: 'first',
-        content: 'demo content',
-        tags: [
-          {
-            id: 'demotag_0',
-            tag: '⌗ hastag'
-          }
-        ]
-      }
-    ]
+    id: '78733D0DD44E9BBCA1D931C569676531',
+    title: 'Done',
+    label: 'hsl(345, 69%, 90%)',
+    tasks: []
   }
 ]
