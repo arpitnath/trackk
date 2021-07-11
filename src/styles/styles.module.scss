@@ -43,6 +43,7 @@ Jumbotron Styles
     margin-bottom: var.$d0;
     @media (max-width: 600px) {
       font-size: var.$font-size-1;
+      margin-top: -2rem;
     }
   }
 
@@ -54,17 +55,26 @@ Jumbotron Styles
 }
 
 .jumbo-content {
-  p {
-    font-weight: normal;
-    line-height: 1;
-    font-size: var.$font-size-2;
-    @media (max-width: 600px) {
-      font-size: var.$font-size-4;
-      line-height: 1.2;
-    }
-  }
+  height: 250px;
+
   @media (max-width: 600px) {
-    margin-top: var.$d1;
+    width: 160%;
+    margin-left: -3rem;
+  }
+}
+
+.jumbo-textarea {
+  height: 100%;
+  position: relative;
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    cursor: text;
+    font-size: var.$font-size-5;
   }
 }
 
@@ -81,6 +91,10 @@ Groups Styles
   font-size: 24px;
   color: red;
   padding: 0 5rem;
+
+  @media (max-width: 600px) {
+    margin-top: -8rem;
+  }
 }
 
 .group-wrapper {

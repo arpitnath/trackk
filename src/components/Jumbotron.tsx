@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useLocalStorgeState } from '../hooks/localStorageState'
+import { debounce } from '../utils/helpers'
 
 interface JumbotronComposition {
   Container: React.FC
@@ -27,8 +29,41 @@ const JumboTitle: React.FC<{ title: string }> = ({ title }) => {
   return <h1>{title}</h1>
 }
 
-const JumboContent: React.FC = ({ children }) => {
-  return <div className='jumbo-content'>{children}</div>
+const JumboContent: React.FC = () => {
+  const defaultContent = `⛰ Epics are large overarching initiatives.
+🏃‍♂️ Sprints are time-bounded pushes to complete a set of tasks.
+🔨 Tasks are the actions that make up epics.
+🐞 Bugs are tasks to fix things.
+  `
+
+  const [state, setState] = useLocalStorgeState('jumbo-content', defaultContent)
+
+  const [content, setContent] = useState(state)
+
+  const handleChangeContent = (event: any) => {
+    debouncedUpdaterCall(event.target.value)
+    // setState(event.target.value)
+    setContent(event.target.value)
+  }
+
+  const updaterCall = (value: string) => {
+    console.log(`%c --DEBOUNCED UPDATE-- => ${value}`, 'color: #5dffc1')
+
+    setState(value)
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUpdaterCall = React.useCallback(
+    debounce((nextVal) => updaterCall(nextVal), 700),
+    []
+  )
+
+  return (
+    <div className='jumbo-content'>
+      <div className='jumbo-textarea'>
+        <textarea onChange={(e) => handleChangeContent(e)} value={content} />{' '}
+      </div>
+    </div>
+  )
 }
 
 Jumbotron.Container = JumboContainer
