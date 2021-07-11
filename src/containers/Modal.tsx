@@ -32,7 +32,6 @@ const ModalContainer: React.FC<Props> = ({
           updateTitle={setState}
           title={data.heading}>
           <Modal.HeaderOptions>
-            {/* Tags will go */}
             <Tags
               remove={removeTags}
               update={update}
@@ -43,7 +42,6 @@ const ModalContainer: React.FC<Props> = ({
         </Modal.HeaderBody>
       </Modal.Header>
       <Modal.Content>
-        <Modal.Placeholder />
         <Modal.TextArea
           location={elementLocation}
           updateContent={setState}
