@@ -150,7 +150,7 @@ const TagBlock: React.FC<{
 }
 
 const TagTitle: React.FC<{ title: string }> = ({ title }) => {
-  return <span>{title}</span>
+  return <span className='tag-head-title'>{title}</span>
 }
 
 const AddTag: React.FC<{ updateTag: (arg: string) => void }> = ({
