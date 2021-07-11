@@ -8,8 +8,17 @@ import { Tag } from '../utils/types'
 
 interface TagsComposition {
   Container: React.FC
-  List: React.FC<{ tag: Tag; onclick?: (arg?: string) => void }>
-  Tag: React.FC<{ data: string; onclick?: (arg?: string) => void; id: string }>
+  List: React.FC<{
+    tag: Tag
+    onclick?: (arg?: string) => void
+    tooltip: boolean
+  }>
+  Tag: React.FC<{
+    data: string
+    onclick?: (arg?: string) => void
+    id: string
+    tooltip: boolean
+  }>
   Title: React.FC<{ title: string }>
   Addtag: React.FC<{ updateTag: (arg: string) => void }>
   SuggestiveTags: React.FC<{ state: Tag[] }>
@@ -67,7 +76,7 @@ const Tags: React.FC<Props> & TagsComposition = ({
           <Tags.Title title='Type' />
           <div className='tag-list'>
             {tagState.map((data) => (
-              <Tags.List key={data.id} tag={data} />
+              <Tags.List tooltip={false} key={data.id} tag={data} />
             ))}
             {!addState ? (
               <Button
@@ -91,43 +100,54 @@ const TagContainer: React.FC = ({ children }) => {
   return <div className='tag-container'>{children}</div>
 }
 
-const TagList: React.FC<{ tag: Tag; onclick?: () => void }> = ({
-  tag,
-  onclick
-}) => {
-  return (
-    <>
-      <Tags.Tag onclick={onclick} data={tag.tag} id={tag.id} />
-    </>
-  )
-}
-
-const TagBlock: React.FC<{ data: string; onclick?: () => void; id: string }> =
-  ({ data, onclick, id }) => {
-    const { tagColor, removeTag } = useContext(TagContext)
-    const [bg] = useState({
-      tagcolor: {
-        backgroundColor: tagColor
-      }
-    })
+const TagList: React.FC<{ tag: Tag; onclick?: () => void; tooltip: boolean }> =
+  ({ tag, onclick, tooltip }) => {
     return (
       <>
-        <span
-          data-tip
-          data-for='tagtooltip'
-          onDoubleClick={() => removeTag(id)}
-          role='none'
-          onClick={onclick}
-          style={bg.tagcolor}
-          className='tag-block'>
-          {data}
-        </span>
-        <ReactTooltip id='tagtooltip' place='bottom' effect='solid'>
-          Double click to remove a tag
-        </ReactTooltip>
+        <Tags.Tag
+          tooltip={tooltip}
+          onclick={onclick}
+          data={tag.tag}
+          id={tag.id}
+        />
       </>
     )
   }
+
+const TagBlock: React.FC<{
+  data: string
+  onclick?: () => void
+  id: string
+  tooltip: boolean
+}> = ({ data, onclick, id, tooltip }) => {
+  const { tagColor, removeTag } = useContext(TagContext)
+  const [bg] = useState({
+    tagcolor: {
+      backgroundColor: tagColor
+    }
+  })
+  return (
+    <>
+      <span
+        data-tip
+        data-for='tagtooltip'
+        onDoubleClick={() => removeTag(id)}
+        role='none'
+        onClick={onclick}
+        style={bg.tagcolor}
+        className='tag-block'>
+        {data}
+      </span>
+      <ReactTooltip
+        disable={tooltip}
+        id='tagtooltip'
+        place='bottom'
+        effect='solid'>
+        Double click to remove a tag
+      </ReactTooltip>
+    </>
+  )
+}
 
 const TagTitle: React.FC<{ title: string }> = ({ title }) => {
   return <span>{title}</span>
@@ -178,7 +198,12 @@ const SavedTags: React.FC<{ state: Tag[] }> = ({ state }) => {
       <p>Your recent tags</p>
       <div className='savedtags-container'>
         {state.map((tag: Tag) => (
-          <Tags.List onclick={() => handleClick(tag)} key={tag.id} tag={tag} />
+          <Tags.List
+            tooltip={true}
+            onclick={() => handleClick(tag)}
+            key={tag.id}
+            tag={tag}
+          />
         ))}
       </div>
     </div>
