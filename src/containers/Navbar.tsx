@@ -11,7 +11,7 @@ const NavbarContainer: React.FC = () => {
             data-icon='emojione:pen'
             data-inline='false'></span>
         </Navbar.Logo>
-        <Navbar.Title>trackk</Navbar.Title>
+        <Navbar.Title>trackk-test</Navbar.Title>
       </Navbar.Container>
     </Navbar>
   )
